@@ -12,6 +12,7 @@ class home extends Component {
   }
   render() {
     const { informations, loading } = this.props.data;
+    console.log( "--------------------" );
     console.log(informations);
     let recentScreamsMarkup = !loading ? (
       informations.map((information) => <Info key={information.informationId} information={information} />)

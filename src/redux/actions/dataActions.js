@@ -11,7 +11,8 @@ import {
   SET_SCREAM,
   STOP_LOADING_UI,
   SUBMIT_COMMENT,
-  SET_INFORMATIONS
+  SET_INFORMATIONS,
+  SET_NEWSFEED,
 } from "../types";
 import axios from "axios";
 
@@ -178,3 +179,37 @@ export const getInformation = () => dispatch => {
       });
     });
 };
+
+export const getNewsFeed = () => dispatch =>{
+  dispatch({ type: LOADING_DATA });
+
+
+  
+  const CORS_PROXY = "https://cors-anywhere.herokuapp.com/"
+  let Parser = require('rss-parser');
+      let parser = new Parser();
+      let newsFeed=[];
+      (async () => {
+      
+        
+      let feed = await parser.parseURL(CORS_PROXY  + 'http://zeenews.india.com/tamil/india.xml');
+      console.log(" feed =  " + feed.title);
+      
+      feed.items.forEach(item => {
+         // console.log(item.title + ':' + item.link)
+          newsFeed.push({
+            "title": item.title,
+            "link": item.link
+          }) 
+          
+      });
+      
+      })();
+      console.log(newsFeed.length);
+      dispatch({
+        type: SET_NEWSFEED,
+        payload: "Gokul"
+      });
+
+
+}

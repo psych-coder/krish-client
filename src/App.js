@@ -6,9 +6,10 @@ import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
 import Navbar from "./components/layout/Navbar";
 import home from "./pages/home";
-import login from "./pages/login";
+import info from "./components/Info/Info";
 import signup from "./pages/signup";
 import user from './pages/user';
+import NewsFeed from './pages/newsfeed';
 import themeFile from "./util/theme";
 
 import jwtDecode from "jwt-decode";
@@ -51,18 +52,17 @@ class App extends Component {
               <div className="container">
               <Switch>
                 <Route exact path="/" component={home} />
-               {/*  <AuthRoute
+                <AuthRoute
                   exact
-                  path="/login"
-                  component={login}
+                  path="/gk"
+                  component={home}
                 />
                 <AuthRoute
                   exact
-                  path="/signup"
-                  component={signup}
+                  path="/newsfeed"
+                  component={NewsFeed}
                 />
-                <Route exact path="/users/:handle" component={user} />
-                <Route exact path="/users/:handle/scream/:screamId" component={user} /> */}
+               
               </Switch>
               </div>
             </Router>
