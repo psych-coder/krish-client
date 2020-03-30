@@ -22,6 +22,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import axios from "axios";
+const CORS_PROXY = "https://cors-anywhere.herokuapp.com/"
 
 const styles = theme => ({
   root: {
@@ -52,7 +54,7 @@ const styles = theme => ({
   }
 });
 
-class Info extends Component {
+class Info1 extends Component {
   constructor() {
     super();
     this.state = {
@@ -64,31 +66,25 @@ class Info extends Component {
   handleExpandClick = () => {
     this.setState({ expanded: !this.state.expanded });
   };
+
+  readString = (url) => {
+    console.log(url)
+    axios.get(CORS_PROXY + url).then(res => console.log(res))
+  }
   render() {
     dayjs.extend(relativeTime);
     const { classes } = this.props;
+    console.log(this.props.data);
+   
+ /*    const imageAvaliable =  this.props.image !== "" ? (
+      <CardMedia
+        className={classes.media}
+        image={this.state.image}
+      />
+    ) : null;
+ */
+   //console.log(this.readString(this.props.data.link));
 
-    const {
-      information: {
-        informationId,
-        title,
-        body,
-        createdAt,
-        cardImage,
-        shortDesc
-      }
-    } = this.props;
-
-    const trimedBody = shortDesc.length > 300 ? shortDesc.substring(0, 300) + "..." : shortDesc;
-    const imageAvaliable = cardImage !== undefined && cardImage.trim() !== "" ? (
-        <CardMedia
-          className={classes.media}
-          image={cardImage}
-          title="Paella dish"
-        />
-      ) : null;
-
-    console.log(createdAt);
     return (
       <Card className={classes.root}>
         <CardHeader
@@ -102,55 +98,16 @@ class Info extends Component {
               <MoreVertIcon />
             </IconButton>
           }
-          title={title}
-          subheader={dayjs(createdAt).fromNow()}
+          title={this.props.data.title}
+          subheader={dayjs(this.props.data.pubDate).fromNow()}
         />
-        {imageAvaliable}
+     
 
-        <Collapse in={!this.state.expanded} timeout="auto" unmountOnExit>
-          <CardContent in={this.state.expanded}>
-            <Typography paragraph color="textPrimary" component="p">
-              {trimedBody}
-            </Typography>
-          </CardContent>
-        </Collapse>
-
-        <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography paragraph>{body}</Typography>
-          </CardContent>
-        </Collapse>
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
-          {shortDesc.length > 300 && (<IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: this.state.expanded
-            })}
-            onClick={this.handleExpandClick}
-            aria-expanded={this.state.expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </IconButton>) }
-          
-        </CardActions>
       </Card>
     );
   }
 }
 
-Info.propTypes = {
-  information: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired
-};
 
-const mapStateToProps = state => ({
-  user: state.data
-});
 
-export default connect(mapStateToProps)(withStyles(styles)(Info));
+export default (withStyles(styles)(Info1));

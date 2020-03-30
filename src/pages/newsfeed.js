@@ -24,6 +24,9 @@ import InfoSkeleton from '../util/InfoSkeleton'
 
 import { connect } from "react-redux";
 import { getNewsFeed } from "../redux/actions/dataActions";
+import axios from "axios";
+import Info1 from '../components/Info/Info1'
+const CORS_PROXY = "https://cors-anywhere.herokuapp.com/"
 
 const styles = theme => ({
   root: {
@@ -57,51 +60,29 @@ const styles = theme => ({
 class NewsFeed extends Component {
   constructor() {
     super();
-    this.state = {
-      title: "",
-      link: "",
-      pubDate: "",
-      creator: "",
-      content: "",
-      contentSnippet: "",
-      guid: "",
-      categories: ""
-    };
+    this.state = { data: [] };
   }
 
-  componentDidMount() {
-    this.props.getNewsFeed();
+  async componentDidMount() {
+    let Parser = require('rss-parser');
+      let parser = new Parser()
+    const response = await parser.parseURL(CORS_PROXY  + 'http://feeds.feedburner.com/Hindu_Tamil_india');
+    const json = response.items
+    this.setState({ data: json });
   }
 
   render() {
-    dayjs.extend(relativeTime);
-    const { classes } = this.props;
-
-    
-    const {  newsFeed, loading } = this.props.data;
-    console.log("======");
-    let f = newsFeed;
-    console.log(f);
-    
     
     return (
-       <div>{newsFeed} </div>
-          
-      );
-    }
-  
-
+      <div>
+          {this.state.data.map(el => (
+            
+            <Info1 key={el.guid} data={el} />
+          ))}
+        
+      </div>
+    );
+  }
 }
 
-NewsFeed.propTypes = {
-    data: PropTypes.object,
-  classes: PropTypes.object.isRequired
-};
-
-const mapStateToProps = (state) => ({
-    data: state.data
-  });
-
-export default connect(mapStateToProps, { getNewsFeed })(
-  withStyles(styles)(NewsFeed)
-);
+export default (withStyles(styles)(NewsFeed));

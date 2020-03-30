@@ -7,6 +7,7 @@ import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Navbar from "./components/layout/Navbar";
 import home from "./pages/home";
 import info from "./components/Info/Info";
+import login from "./pages/login";
 import signup from "./pages/signup";
 import user from './pages/user';
 import NewsFeed from './pages/newsfeed';
@@ -37,7 +38,7 @@ if (token) {
   } else {
     store.dispatch({type : SET_AUTHENTICATED });
     axios.defaults.headers.common['Authorization'] = token;
-    store.dispatch(getUserData());
+    //store.dispatch(getUserData());
   }
 }
 
@@ -52,17 +53,23 @@ class App extends Component {
               <div className="container">
               <Switch>
                 <Route exact path="/" component={home} />
+
                 <AuthRoute
+                  exact
+                  path="/login"
+                  component={login}
+                />
+
+               {/*  <AuthRoute
                   exact
                   path="/gk"
                   component={home}
-                />
+                /> */}
                 <AuthRoute
                   exact
-                  path="/newsfeed"
-                  component={NewsFeed}
+                  path="/kurangu"
+                  component={home}
                 />
-               
               </Switch>
               </div>
             </Router>

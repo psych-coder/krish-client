@@ -54,10 +54,11 @@ class login extends Component {
         const { errors } = this.state;
 
         return (
-          <Grid container className={classes.form}>
-              <Grid item sm />
-              <Grid item sm >
-                  <img src={AppIcon} alt="Logo " />
+          <Grid container spacing={1} className={classes.form}>
+              <Grid item sm={2} xs={8} />
+              <Grid item sm={4} xs={10} >
+                <br/>
+                <br/>
                   <Typography variant='h2' className={classes.pageTitle}>
                       Login 
                   </Typography>
@@ -94,7 +95,7 @@ class login extends Component {
                         <small>Don't have an account? Sign up <Link to='/signup'>here</Link> </small>
                   </form> 
               </Grid>
-              <Grid item sm />
+              
           </Grid>
         )
     }

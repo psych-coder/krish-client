@@ -8,7 +8,7 @@ import {
   SET_SCREAM,
   SUBMIT_COMMENT,
   SET_INFORMATIONS,
-  SET_NEWSFEED
+  POST_INFO,
 } from "../types";
 
 const initialState = {
@@ -22,12 +22,6 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case SET_NEWSFEED:
-      return {
-        ...state,
-        newsFeed: action.payload,
-        loading: false
-      };
     case SET_INFORMATIONS:
       return {
         ...state,
@@ -51,6 +45,14 @@ export default function(state = initialState, action) {
         screams: [
           action.payload,
           ...state.screams
+        ]
+      }
+      case POST_INFO:
+      return {
+        ...state,
+        informations: [
+          action.payload,
+          ...state.informations
         ]
       }
     case LOADING_DATA:

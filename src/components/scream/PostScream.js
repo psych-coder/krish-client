@@ -17,7 +17,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 
-import { postScream,clearErrors } from "../../redux/actions/dataActions";
+import { postInfo,clearErrors } from "../../redux/actions/dataActions";
 
 const styles = them => ({
   ...them.spreadThis,
@@ -39,6 +39,10 @@ class PostScream extends Component {
   state = {
     open: false,
     body: "",
+    title:"",
+    topic:"",
+    tags:"",
+    editorpick:false,
     errors: {}
   };
   componentWillReceiveProps(nextprops){
@@ -46,7 +50,7 @@ class PostScream extends Component {
       this.setState({errors: nextprops.UI.errors});
     }
     if(!nextprops.UI.errors && !nextprops.UI.loading){
-      this.setState({ body: '',  open: false, errors:{}});
+      this.setState({ body: '', title:'',  open: false, errors:{}});
     }
   }
   handleChange = (event) => {
@@ -61,8 +65,9 @@ class PostScream extends Component {
   };
   handleSubmit = (event) => {
       event.preventDefault();
-      this.props.postScream({body: this.state.body});
-  } 
+      this.props.postInfo({title:this.state.title,body: this.state.body,tags: this.state.tags,topic: this.state.topic, editorpick:this.state.editorpick});
+      window.history.pushState(null,null,'/kurangu');
+    } 
   render() {
     const { errors } = this.state;
     const {
@@ -71,7 +76,7 @@ class PostScream extends Component {
     } = this.props;
     return (
       <Fragment>
-        <MyButton onClick={this.handleOpen} tip="Post a scream" >
+        <MyButton onClick={this.handleOpen} tip="Post a news" >
         <AddIcon />
         </MyButton>
         <Dialog
@@ -87,9 +92,45 @@ class PostScream extends Component {
           >
             <CloseIcon />
           </MyButton>
-          <DialogTitle>Post a new scream</DialogTitle>
+          <DialogTitle>Post a new Information</DialogTitle>
           <DialogContent>
             <form onSubmit={this.handleSubmit}>
+            <TextField
+                name="title"
+                type="text"
+                label="Title"
+                multiline
+                placeholder="Title"
+                errors={errors.title ? true : false}
+                helperText={errors.title}
+                className={classes.textField}
+                onChange={this.handleChange}
+                fullWidth
+              />
+              <TextField
+                name="tags"
+                type="text"
+                label="Tags"
+                multiline
+                placeholder="Tags"
+                errors={errors.tags ? true : false}
+                helperText={errors.tags}
+                className={classes.textField}
+                onChange={this.handleChange}
+                fullWidth
+              />
+              <TextField
+                name="topic"
+                type="text"
+                label="Topic"
+                multiline
+                placeholder="Topic"
+                errors={errors.topic ? true : false}
+                helperText={errors.topic}
+                className={classes.textField}
+                onChange={this.handleChange}
+                fullWidth
+              />
               <TextField
                 name="body"
                 type="text"
@@ -126,7 +167,7 @@ class PostScream extends Component {
 }
 
 PostScream.propTypes = {
-  postScream: PropTypes.func.isRequired,
+  postInfo: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   loading: PropTypes.object
 };
@@ -136,5 +177,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { postScream,clearErrors }
+  { postInfo,clearErrors }
 )(withStyles(styles)(PostScream));

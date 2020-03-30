@@ -34,9 +34,7 @@ class Navbar extends Component {
                     </Fragment>
                     ) : (
                     <Fragment>
-                        <Button color='inherit' component={Link} to='/newsfeed'>News Feed</Button>
                         <Button color='inherit' component={Link} to='/gk'>GK</Button>
-                        <Button color='inherit' component={Link} to='/movies'>Movies</Button>
                     </Fragment>        
                 )}
                 </Toolbar>
