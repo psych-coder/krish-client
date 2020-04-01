@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import AppIcon from '../images/logo.png';
+//import AppIcon from '../images/logo.png';
 
 import Typography from '@material-ui/core/Typography';
 import TextFiled from '@material-ui/core/TextField';

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -10,7 +9,7 @@ import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import { blue, deepOrange } from "@material-ui/core/colors";
+import { blue } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -34,7 +33,7 @@ const styles = theme => ({
     margin: "auto",
     //width:'500px',
     //margin:"10%",
-    paddingTop: "30%"
+    padding: "30%"
   },
   expand: {
     transform: "rotate(0deg)",
@@ -70,7 +69,7 @@ class Info extends Component {
 
     const {
       information: {
-        informationId,
+        //informationId,
         title,
         body,
         createdAt,
@@ -84,7 +83,6 @@ class Info extends Component {
         <CardMedia
           className={classes.media}
           image={cardImage}
-          title="Paella dish"
         />
       ) : null;
 

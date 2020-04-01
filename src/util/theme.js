@@ -1,5 +1,5 @@
 //import { borderBottom } from "@material-ui/system";
-import { blue, deepOrange } from "@material-ui/core/colors";
+import { blue } from "@material-ui/core/colors";
 
 export default {
   palette: {

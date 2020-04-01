@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+/* import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -25,7 +25,7 @@ import InfoSkeleton from '../util/InfoSkeleton'
 import { connect } from "react-redux";
 import { getNewsFeed } from "../redux/actions/dataActions";
 import axios from "axios";
-import Info1 from '../components/Info/Info1'
+//import Info1 from '../components/Info/Info1'
 const CORS_PROXY = "https://cors-anywhere.herokuapp.com/"
 
 const styles = theme => ({
@@ -86,3 +86,4 @@ class NewsFeed extends Component {
 }
 
 export default (withStyles(styles)(NewsFeed));
+ */

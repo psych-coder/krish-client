@@ -13,7 +13,6 @@ import {
   SUBMIT_COMMENT,
   SET_INFORMATIONS,
   POST_INFO,
-  SET_NEWSFEED,
 } from "../types";
 import axios from "axios";
 

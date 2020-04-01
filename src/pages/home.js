@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 
@@ -14,7 +14,7 @@ class home extends Component {
   }
   render() {
     const { informations, loading } = this.props.data;
-    const { authenticated } = this.props.user;
+    //const { authenticated } = this.props.user;
     
     const location = this.props.location.pathname;
 

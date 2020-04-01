@@ -4,7 +4,7 @@ import MyButton from "../../util/MyButton";
 //redux
 
 import { connect } from "react-redux";
-import { likeScream, unLikeScream } from "../../redux/actions/dataActions";
+//import { likeScream, unLikeScream } from "../../redux/actions/dataActions";
 import PropTypes from "prop-types";
 
 //Mui
