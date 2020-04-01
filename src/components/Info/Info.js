@@ -88,7 +88,7 @@ class Info extends Component {
         />
       ) : null;
 
-    console.log(createdAt);
+   
     return (
       <Card className={classes.root}>
         <CardHeader
@@ -146,11 +146,12 @@ class Info extends Component {
 
 Info.propTypes = {
   information: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  user: state.data
+  user: state.user
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(Info));

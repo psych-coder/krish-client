@@ -15,8 +15,10 @@ class home extends Component {
   render() {
     const { informations, loading } = this.props.data;
     const { authenticated } = this.props.user;
-    console.log(authenticated);
+    
     const location = this.props.location.pathname;
+
+    console.log(informations);
 
     let recentScreamsMarkup = !loading ? (
       informations.map(information => (
@@ -25,7 +27,6 @@ class home extends Component {
     ) : (
       <InfoSkeleton />
     );
-    console.log(location);
     let profileMarup =
       location === "/kurangu" ? (
         <Grid item sm={3} xs={12}>

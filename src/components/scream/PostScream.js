@@ -66,7 +66,7 @@ class PostScream extends Component {
   handleSubmit = (event) => {
       event.preventDefault();
       this.props.postInfo({title:this.state.title,body: this.state.body,tags: this.state.tags,topic: this.state.topic, editorpick:this.state.editorpick});
-      window.history.pushState(null,null,'/kurangu');
+      //window.history.pushState(null,null,'/kurangu');
     } 
   render() {
     const { errors } = this.state;

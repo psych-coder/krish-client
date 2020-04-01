@@ -73,7 +73,6 @@ export const getScream = (screamId) => dispatch =>{
 }
 //Like a Scream
 export const likeScream = screamId => dispatch => {
-  console.log( "likeScream " +  screamId );
   axios
     .get(`/scream/${screamId}/like`)
     .then(res => {
@@ -86,7 +85,6 @@ export const likeScream = screamId => dispatch => {
 };
 //Unlike a scream
 export const unlikeScream = screamId => dispatch => {
-  console.log( "unLikeScream " +  screamId );
 
   axios
     .get(`/scream/${screamId}/unlike`)
@@ -144,13 +142,13 @@ export const getUserData = (userHandle) => (dispatch) => {
     .get(`/user/${userHandle}`)
     .then((res) => {
       dispatch({
-        type: SET_SCREAMS,
-        payload: res.data.screams
+        type: SET_INFORMATIONS,
+        payload: res.data.informations
       });
     })
     .catch(() => {
       dispatch({
-        type: SET_SCREAMS,
+        type: SET_INFORMATIONS,
         payload: null
       });
     });
@@ -183,6 +181,7 @@ export const getInformation = () => dispatch => {
 
 
 export const postInfo = (newInfo) => (dispatch) =>{
+  debugger;
   dispatch({type : LOADING_UI});
   axios.post("/information", newInfo)
   .then(res =>{

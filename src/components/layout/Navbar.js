@@ -28,9 +28,9 @@ class Navbar extends Component {
                                 <HomeIcon />
                             </MyButton>
                         </Link>
-                        <MyButton tip="Notifications" >
+                        {/* <MyButton tip="Notifications" >
                             <Notifications />
-                        </MyButton>
+                        </MyButton> */}
                     </Fragment>
                     ) : (
                     <Fragment>

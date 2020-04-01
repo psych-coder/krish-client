@@ -26,7 +26,6 @@ class user extends Component {
       .get(`/user/${handle}`)
       .then((res) => {
         this.setState({profile : res.data})
-        console.log(res.data);
         
       })
       .catch(err => console.log(err));

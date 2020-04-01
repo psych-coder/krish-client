@@ -40,6 +40,7 @@ export default function(state = initialState, action) {
         scream: action.payload
            };
     case POST_SCREAM:
+      debugger;
       return {
         ...state,
         screams: [
@@ -48,6 +49,7 @@ export default function(state = initialState, action) {
         ]
       }
       case POST_INFO:
+        debugger;
       return {
         ...state,
         informations: [

@@ -68,13 +68,11 @@ class Info1 extends Component {
   };
 
   readString = (url) => {
-    console.log(url)
     axios.get(CORS_PROXY + url).then(res => console.log(res))
   }
   render() {
     dayjs.extend(relativeTime);
     const { classes } = this.props;
-    console.log(this.props.data);
    
  /*    const imageAvaliable =  this.props.image !== "" ? (
       <CardMedia

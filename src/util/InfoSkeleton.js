@@ -19,7 +19,7 @@ const InfoSkeleton = props => {
   const { classes } = props;
 
   const content = Array.from({ length: 5 }).map((item, index) => (
-    <Card className={classes.root}>
+    <Card key={index} className={classes.root}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
@@ -31,7 +31,7 @@ const InfoSkeleton = props => {
         subheader="Loading..."
       />
       <CardContent>
-        <Typography paragraph>
+        <Typography component={'span'}>
           <div className={classes.fullLine} />
           <div className={classes.fullLine} />
           <div className={classes.halfLine} />

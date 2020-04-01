@@ -8,7 +8,7 @@ import Navbar from "./components/layout/Navbar";
 import home from "./pages/home";
 import info from "./components/Info/Info";
 import login from "./pages/login";
-import signup from "./pages/signup";
+import test from "./pages/test";
 import user from './pages/user';
 import NewsFeed from './pages/newsfeed';
 import themeFile from "./util/theme";
@@ -31,14 +31,13 @@ const token = localStorage.FBIdToken;
 console.log(token);
 if (token) {
   const decodeToken = jwtDecode(token);
-  console.log(decodeToken);
   if (decodeToken.exp * 1000 < Date.now()) {
     store.dispatch(logoutUser());
     window.location.href = "/login";
   } else {
     store.dispatch({type : SET_AUTHENTICATED });
     axios.defaults.headers.common['Authorization'] = token;
-    //store.dispatch(getUserData());
+    store.dispatch(getUserData());
   }
 }
 
@@ -70,6 +69,8 @@ class App extends Component {
                   path="/kurangu"
                   component={home}
                 />
+
+                <Route exact path="/test" component={test} />
               </Switch>
               </div>
             </Router>
