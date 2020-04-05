@@ -9,6 +9,7 @@ import {
   SUBMIT_COMMENT,
   SET_INFORMATIONS,
   POST_INFO,
+  SET_IMAGE
 } from "../types";
 
 const initialState = {
@@ -17,7 +18,8 @@ const initialState = {
   loading: false,
   informations: [],
   information: {},
-  newsFeed : []
+  newsFeed : [],
+  cardImage  :""
 };
 
 export default function(state = initialState, action) {
@@ -34,6 +36,11 @@ export default function(state = initialState, action) {
         screams: action.payload,
         loading: false
       };
+      case SET_IMAGE:
+      return {
+        ...state,
+        cardImage: action.payload
+           };
     case SET_SCREAM:
       return {
         ...state,

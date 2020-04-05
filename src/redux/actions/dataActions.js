@@ -13,6 +13,7 @@ import {
   SUBMIT_COMMENT,
   SET_INFORMATIONS,
   POST_INFO,
+  SET_IMAGE
 } from "../types";
 import axios from "axios";
 
@@ -180,7 +181,6 @@ export const getInformation = () => dispatch => {
 
 
 export const postInfo = (newInfo) => (dispatch) =>{
-  debugger;
   dispatch({type : LOADING_UI});
   axios.post("/information", newInfo)
   .then(res =>{
@@ -196,4 +196,16 @@ export const postInfo = (newInfo) => (dispatch) =>{
       payload : err.response.data
     })
   })
+}
+
+export const uploadImage = (formData) => (dispatch) => {
+  dispatch({type : LOADING_UI});
+  axios.post('/information/image',formData)
+  .then(res => {
+     dispatch({
+      type : SET_IMAGE,
+      payload : res.data.imageURl
+    });
+  })
+  .catch(err => console.log(err))
 }
