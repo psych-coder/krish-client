@@ -38,7 +38,7 @@ export default {
       margin: "10px auto 10px auto"
     },
     button: {
-      marginTop: "20",
+      marginTop: "5px",
       position: "relative"
     },
     customErrors: {
@@ -101,7 +101,7 @@ export default {
 
   root: {
     maxWidth: 700,
-    margin: "auto",
+    //margin: "auto",
     "margin-bottom" : "30px"
   },
   media: {

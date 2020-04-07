@@ -12,14 +12,19 @@ import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 const styles = theme => ({
-  ...theme.spreadThis
+  ...theme.spreadThis,
+  root: {
+    //maxWidth: 700,
+    margin: "auto",
+    "margin-bottom" : "30px"
+  },
 });
 
 const InfoSkeleton = props => {
   const { classes } = props;
 
   const content = Array.from({ length: 5 }).map((item, index) => (
-    <Card key={index} className={classes.root}>
+    <Card key={index} className={classes.root} >
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
@@ -30,8 +35,8 @@ const InfoSkeleton = props => {
         title="Loading..."
         subheader="Loading..."
       />
-      <CardContent>
-        <Typography component={'span'}>
+      <CardContent >
+        <Typography color="textPrimary" component="p" >
           <div className={classes.fullLine} />
           <div className={classes.fullLine} />
           <div className={classes.halfLine} />

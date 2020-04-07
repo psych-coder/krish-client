@@ -54,47 +54,53 @@ class login extends Component {
         const { errors } = this.state;
 
         return (
-          <Grid container spacing={1} className={classes.form}>
-              <Grid item sm={2} xs={8} />
-              <Grid item sm={4} xs={10} >
-                <br/>
-                <br/>
-                  <Typography variant='h2' className={classes.pageTitle}>
-                      Login 
-                  </Typography>
-                  <form noValidate onSubmit={this.handleSubmit} >
-                    <TextFiled id="email" name="email" type="email" label="Email" 
-                        className={classes.textField}
-                        value = {this.state.email} onChange={this.handleChange} fullWidth
-                        helperText={errors.email} 
-                        error={errors.email ? true : false }
-                        />
-                    <TextFiled id="password" name="password" type="password" label="password" 
-                        className={classes.textField}
-                        value = {this.state.password} onChange={this.handleChange} fullWidth 
-                        helperText={errors.password} 
-                        error={errors.password ? true : false }
-                        />
-                        {errors.general && (
-                            <Typography variant="body2" className={classes.customErrors}>
-                                {errors.general}
-                            </Typography>
-                        )}
-                        
-                        <Button type="submit" variant="contained" 
-                            color='primary' 
-                            className={classes.button}
-                            disabled={loading}
-                            >
-                            Login
-                            {loading && (
-                                <CircularProgress size={30} className={classes.progress} />
-                            )}
-                        </Button>
-                        <br/>
-                        <small>Don't have an account? Sign up <Link to='/signup'>here</Link> </small>
-                  </form> 
-              </Grid>
+          <Grid container className={classes.form} >
+      
+      <Grid item container justify="center" spacing={1}>
+          <Grid item />
+            
+  
+          <Grid item sm={3} justify="center">
+            <Typography variant='h2'  className={classes.pageTitle}>
+                    Login 
+                </Typography>
+                <form noValidate onSubmit={this.handleSubmit} >
+                  <TextFiled id="email" name="email" type="email" label="Email" 
+                      className={classes.textField}
+                      value = {this.state.email} onChange={this.handleChange} fullWidth
+                      helperText={errors.email} 
+                      error={errors.email ? true : false }
+                      />
+                  <TextFiled id="password" name="password" type="password" label="password" 
+                      className={classes.textField}
+                      value = {this.state.password} onChange={this.handleChange} fullWidth 
+                      helperText={errors.password} 
+                      error={errors.password ? true : false }
+                      />
+                      {errors.general && (
+                          <Typography variant="body2" className={classes.customErrors}>
+                              {errors.general}
+                          </Typography>
+                      )}
+                      
+                      <Button type="submit" variant="contained" 
+                          color='primary' 
+                          className={classes.button}
+                          disabled={loading}
+                          >
+                          Login
+                          {loading && (
+                              <CircularProgress size={30} className={classes.progress} />
+                          )}
+                      </Button>
+                      <br/>
+                      <small>Don't have an account? Sign up <Link to='/signup'>here</Link> </small>
+                </form> 
+          </Grid>
+          <Grid  item />
+           
+          
+      </Grid>
               
           </Grid>
         )

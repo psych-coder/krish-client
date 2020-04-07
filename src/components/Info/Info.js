@@ -24,7 +24,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 
 const styles = theme => ({
   root: {
-    maxWidth: 700,
+    //maxWidth: 700,
     margin: "auto",
     "margin-bottom" : "30px"
   },
@@ -80,6 +80,8 @@ class Info extends Component {
 
     const trimedBody = shortDesc.length > 300 ? shortDesc.substring(0, 300) + "..." : shortDesc;
     const imageAvaliable = cardImage !== undefined && cardImage.trim() !== "" ? (
+
+
         <CardMedia
           className={classes.media}
           image={cardImage}
@@ -88,7 +90,8 @@ class Info extends Component {
 
    
     return (
-      <Card className={classes.root}>
+      
+      <Card className={classes.root} variant="outlined">
         <CardHeader
           avatar={
             <Avatar aria-label="recipe" className={classes.avatar}>
@@ -106,7 +109,7 @@ class Info extends Component {
         {imageAvaliable}
 
         <Collapse in={!this.state.expanded} timeout="auto" unmountOnExit>
-          <CardContent in={this.state.expanded}>
+          <CardContent in={this.state.expanded.toString()}>
             <Typography paragraph color="textPrimary" component="p">
               {trimedBody}
             </Typography>

@@ -21,7 +21,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import { postInfo,clearErrors } from "../../redux/actions/dataActions";
 import {uploadImage } from '../../redux/actions/dataActions';
 import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 
 const styles = them => ({
