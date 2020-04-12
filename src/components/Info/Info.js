@@ -26,7 +26,9 @@ const styles = theme => ({
   root: {
     //maxWidth: 700,
     margin: "auto",
-    "margin-bottom" : "30px"
+    "margin-bottom" : "30px",
+    "box-shadow":"none",
+    "border": "1px solid rgb(202, 202, 202);"
   },
   media: {
     height: 0,
@@ -88,7 +90,8 @@ class Info extends Component {
         />
       ) : null;
 
-   
+      const renderHTML = require('react-render-html');
+
     return (
       
       <Card className={classes.root} variant="outlined">
@@ -111,7 +114,8 @@ class Info extends Component {
         <Collapse in={!this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent in={this.state.expanded.toString()}>
             <Typography paragraph color="textPrimary" component="p">
-              {trimedBody}
+           { renderHTML( trimedBody)}
+              
             </Typography>
           </CardContent>
         </Collapse>

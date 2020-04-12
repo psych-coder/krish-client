@@ -16,7 +16,9 @@ const styles = theme => ({
   root: {
     //maxWidth: 700,
     margin: "auto",
-    "margin-bottom" : "30px"
+    "margin-bottom" : "30px",
+    "box-shadow":"none",
+    "border": "1px solid rgb(202, 202, 202);"
   },
 });
 

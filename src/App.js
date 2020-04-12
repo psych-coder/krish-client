@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
+import "./Draft.css";
 
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
@@ -21,6 +22,8 @@ import store from "./redux/store";
 import {SET_AUTHENTICATED} from './redux/types';
 import {logoutUser,getUserData} from './redux/actions/userAction';
 import axios from "axios";
+import MyEditor from "./components/Editor/MyEditor";
+import Viewer from "./components/Editor/Viewer";
 
 const theme = createMuiTheme(themeFile);
 
@@ -42,6 +45,7 @@ if (token) {
 
 class App extends Component {
   render() {
+    console.log(this.props.location)
     return (
       <MuiThemeProvider theme={theme}>
         <Provider store={store}>
@@ -50,8 +54,11 @@ class App extends Component {
               <Navbar />
               <div className="container">
               <Switch>
-                <Route exact path="/" component={home} />
-
+                
+              <Route exact path="/" component={home} />
+                <Route exact path="/info/:tagname" component={home} />
+                <Route exact path="/Editor" component={MyEditor} />
+                <Route exact path="/Viewer" component={Viewer} />
                 <AuthRoute
                   exact
                   path="/login"

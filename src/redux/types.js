@@ -24,3 +24,4 @@ export const SET_INFORMATION = 'SET_INFORMATION';
 export const SET_INFORMATIONS = 'SET_INFORMATIONS';
 export const SET_NEWSFEED = 'SET_NEWSFEED';
 export const SET_IMAGE = 'SET_IMAGE';
+export const SET_TAGS = 'SET_TAGS';

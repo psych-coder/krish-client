@@ -9,7 +9,8 @@ import {
   SUBMIT_COMMENT,
   SET_INFORMATIONS,
   POST_INFO,
-  SET_IMAGE
+  SET_IMAGE,
+  SET_TAGS,
 } from "../types";
 
 const initialState = {
@@ -19,11 +20,17 @@ const initialState = {
   informations: [],
   information: {},
   newsFeed : [],
-  cardImage  :""
+  cardImage  :"",
+  tags:[]
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case SET_TAGS:
+      return {
+        ...state,
+        tags: action.payload
+           };
     case SET_INFORMATIONS:
       return {
         ...state,

@@ -13,7 +13,8 @@ import {
   SUBMIT_COMMENT,
   SET_INFORMATIONS,
   POST_INFO,
-  SET_IMAGE
+  SET_IMAGE,
+  SET_TAGS,
 } from "../types";
 import axios from "axios";
 
@@ -161,10 +162,15 @@ export const clearErrors = () => dispatch =>{
 }
 
 //Get information
-export const getInformation = () => dispatch => {
+export const getInformation = (tagName) => dispatch => {
+
+  let  path= "/informations"
+  if(tagName !==undefined && tagName !== "" && tagName !== "All"){
+    path = `/informations/tags/${tagName}`
+  }
   dispatch({ type: LOADING_DATA });
   axios
-    .get("/informations")
+    .get(path)
     .then(res => {
       dispatch({
         type: SET_INFORMATIONS,
@@ -209,3 +215,21 @@ export const uploadImage = (formData) => (dispatch) => {
   })
   .catch(err => console.log(err))
 }
+
+export const getTags = () => dispatch => {
+  dispatch({ type: LOADING_DATA });
+  axios
+    .get("/tags")
+    .then(res => {
+      dispatch({
+        type: SET_TAGS,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: SET_TAGS,
+        payload: []
+      });
+    });
+};

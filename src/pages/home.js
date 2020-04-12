@@ -3,39 +3,30 @@ import PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 
 import Info from "../components/Info/Info";
+import Tags from "../components/tags/tags";
 import InfoSkeleton from "../util/InfoSkeleton";
 import { connect } from "react-redux";
 import { getInformation } from "../redux/actions/dataActions";
 import Profile from "../components/profile/Profile";
 import withStyles from "@material-ui/core/styles/withStyles";
-import { indigo } from "@material-ui/core/colors";
-
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Paper from "@material-ui/core/Paper";
 
 const styles = (theme) => ({
   root: {
     flexGrow: 21,
   },
-  paper: {
-    height: 50,
-    width: 150,
-  },
-  ulClass: {
-  
-    color:indigo[500]
-    
-  },
-  liClass: {
-    "text-align": "right",
-  },
 });
 
 class home extends Component {
+  constructor(){
+    super()
+    this.state = {
+      tagName:""
+    }
+  }
   componentDidMount() {
-    this.props.getInformation();
+    const tagName = this.props.match.params.tagname;
+    this.setState({tagName:tagName});
+    this.props.getInformation(tagName);
   }
   render() {
     const { classes } = this.props;
@@ -43,11 +34,9 @@ class home extends Component {
     const { informations, loading } = this.props.data;
     //const { authenticated } = this.props.user;
 
-    const location = this.props.location.pathname;
-
-    console.log(informations);
-
-    let recentScreamsMarkup = !loading ? (
+    let location = this.props.location.pathname;
+     
+     let recentScreamsMarkup = !loading ? (
       informations.map((information) => (
         <Info key={information.informationId} information={information} />
       ))
@@ -59,14 +48,7 @@ class home extends Component {
       <Grid container className={classes.root}>
         <Grid item container spacing={1}>
           <Grid item sm={2}>
-            <List component="nav" className={classes.ulClass} >
-              <ListItem button selected={true} className={classes.liClass} >
-                <ListItemText primary="Trash" />
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary="Spam" className={classes.liClass} />
-              </ListItem>
-            </List>
+           <Tags />
           </Grid>
           <Grid item sm={7}>
             {recentScreamsMarkup}

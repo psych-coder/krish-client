@@ -98,7 +98,7 @@ class PostScream extends Component {
   
       event.preventDefault();
       this.props.postInfo({title:this.state.title,body: this.state.body,tags: this.state.tags,topic: this.state.topic, cardImage:this.props.data.cardImage ,editorpick:this.state.editorpick});
-      //window.history.pushState(null,null,'/kurangu');
+      window.history.pushState(null,null,'/kurangu');
     } 
   render() {
     const { errors } = this.state;
