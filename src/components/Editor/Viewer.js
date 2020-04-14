@@ -1,4 +1,3 @@
-import renderHTML from 'react-render-html';
 import React from 'react';
 class Viewer extends React.Component {
     
@@ -7,7 +6,6 @@ class Viewer extends React.Component {
 
       return (
         <div>
-          renderHTML('<li>hello</li><li>world</li>');
 
         </div>
       );
