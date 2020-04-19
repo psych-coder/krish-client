@@ -56,7 +56,7 @@ class Tags extends Component {
     
     ));
     return (
-      <ul component="nav" className={classes.ulClass}>
+      <ul component="nav" className={classes.ulClass} id="tags">
         <a href="/" >
           {" "}
           <li

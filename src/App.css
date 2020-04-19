@@ -21,10 +21,10 @@ body{
 a{
   text-decoration: none;
 }
-li:hover { 
+#tags li:hover { 
   background-color: #F4F4F3;
   border: 1px solid rgb(202, 202, 202);
 }
 #mybutton:hover{
-  background-color: #F4F4F3;
+  background-color: rgb(235, 235, 190);
 }

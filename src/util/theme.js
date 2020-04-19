@@ -2,6 +2,12 @@
 import { blue } from "@material-ui/core/colors";
 
 export default {
+  toolBar:{
+    buttonC: {
+      "border-radius": "10%",
+      "padding":"5px"
+    },
+  },
   palette: {
     primary: {
       light: "#6573c3",
@@ -22,6 +28,10 @@ export default {
     }
   },
   spreadThis: {
+    buttonC: {
+      "border-radius": "10%",
+      "padding":"5px"
+    },
     typography: {
       userNextVariants: true
     },

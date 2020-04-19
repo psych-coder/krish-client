@@ -23,7 +23,7 @@ import {SET_AUTHENTICATED} from './redux/types';
 import {logoutUser,getUserData} from './redux/actions/userAction';
 import axios from "axios";
 import MyEditor from "./components/Editor/MyEditor";
-import Viewer from "./components/Editor/Viewer";
+import TestC from "./components/test/TestC";
 
 const theme = createMuiTheme(themeFile);
 
@@ -58,7 +58,7 @@ class App extends Component {
               <Route exact path="/" component={home} />
                 <Route exact path="/info/:tagname" component={home} />
                 <Route exact path="/Editor" component={MyEditor} />
-                <Route exact path="/Viewer" component={Viewer} />
+                <Route exact path="/test" component={TestC} />
                 <AuthRoute
                   exact
                   path="/login"
