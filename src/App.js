@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import "./Draft.css";
+import "./editor.css";
 
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 
@@ -24,6 +25,7 @@ import {logoutUser,getUserData} from './redux/actions/userAction';
 import axios from "axios";
 import MyEditor from "./components/Editor/MyEditor";
 import TestC from "./components/test/TestC";
+import RichEditorExample from "./components/RichEditor/RichEditor";
 
 const theme = createMuiTheme(themeFile);
 
@@ -58,7 +60,7 @@ class App extends Component {
               <Route exact path="/" component={home} />
                 <Route exact path="/info/:tagname" component={home} />
                 <Route exact path="/Editor" component={MyEditor} />
-                <Route exact path="/test" component={TestC} />
+                <Route exact path="/test" component={RichEditorExample} />
                 <AuthRoute
                   exact
                   path="/login"

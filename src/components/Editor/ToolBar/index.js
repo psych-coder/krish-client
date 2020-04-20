@@ -1,14 +1,23 @@
 import React, { Fragment } from "react";
-import RenderInlineStyle from './inlineStyle';
-
+import { inlineStyles } from "./constant";
+import SButton from './SButton'
 
 class ToolBar extends React.Component {
      
   render() {
-   const { editorState,updateEditorState} = this.props;
+    var currentStyle = this.props.editorState.getCurrentInlineStyle();
     return (
       <Fragment>
-        <RenderInlineStyle editorState={editorState} updateEditorState={updateEditorState} />
+      {inlineStyles.map((type) => (
+          <SButton
+            key={type.label}
+            active={currentStyle.has(type.style)}
+            label={type.label}
+            style={type.style}
+            onToggle={this.props.onToggle}
+            icon={type.icon}
+          />
+        ))}
       </Fragment>
     );
   }

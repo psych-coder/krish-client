@@ -1,35 +1,9 @@
 import React from "react";
 import { Editor, EditorState, RichUtils } from "draft-js";
+import BlockStyleControls from './BlockStyleControls'
+import InlineStyleControls from './InlineStyleControls'
 
-import withStyles from '@material-ui/core/styles/withStyles';
-
-import Grid from "@material-ui/core/Grid";
-import ToolBar from "./ToolBar/index";
-
-const styles = theme => ({
-  root:{
-    "margin-left": "250px",
-    "margin-top": "100px",
-    "border": "1px solid rgb(202, 202, 202);",
-    "width": "50%",
-    "background-color":"white",
-  
-  },
- 
- toolbar:{
-  "border-bottom": "1px solid rgb(202, 202, 202);",
-  "width": "100%",
-  "padding":"10px"
-  
- },
- draft:{
-  //"border": "1px solid rgb(202, 202, 202);",
-  "width": "100%",
-  "padding":"10px",
-  "height":"25rem",
- }
-});
-class MyEditor extends React.Component {
+class RichEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = { editorState: EditorState.createEmpty() };
@@ -67,20 +41,34 @@ class MyEditor extends React.Component {
       RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle)
     );
   }
- 
+
   render() {
-    const {classes} = this.props;
     const { editorState } = this.state;
 
-    //console.log(this.state.editorState);
-    return (
-      <Grid  className={classes.root}>
+    // If the user changes block type before entering any text, we can
+    // either style the placeholder or hide it. Let's just hide it now.
+    let className = "RichEditor-editor";
+    var contentState = editorState.getCurrentContent();
+    if (!contentState.hasText()) {
+      if (contentState.getBlockMap().first().getType() !== "unstyled") {
+        className += " RichEditor-hidePlaceholder";
+      }
+    }
 
-          <Grid item className={classes.toolbar} >
-          <ToolBar editorState={this.state.editorState}  onToggle={this.toggleInlineStyle} />
-          </Grid>
-          <Grid item className={classes.draft} >
+    return (
+      <div className="RichEditor-root">
+        <BlockStyleControls
+          editorState={editorState}
+          onToggle={this.toggleBlockType}
+        />
+        <InlineStyleControls
+          editorState={editorState}
+          onToggle={this.toggleInlineStyle}
+        />
+        <div className={className} onClick={this.focus}>
           <Editor
+            blockStyleFn={getBlockStyle}
+            customStyleMap={styleMap}
             editorState={editorState}
             handleKeyCommand={this.handleKeyCommand}
             onChange={this.onChange}
@@ -89,11 +77,32 @@ class MyEditor extends React.Component {
             ref="editor"
             spellCheck={true}
           />
-          </Grid>
-          
-        
-      </Grid>
+        </div>
+      </div>
     );
   }
 }
-export default withStyles(styles)(MyEditor);
+
+
+
+// Custom overrides for "code" style.
+const styleMap = {
+  CODE: {
+    backgroundColor: "rgba(0, 0, 0, 0.05)",
+    fontFamily: 'Aerial',
+    fontSize: 16,
+    padding: 2,
+  },
+};
+
+function getBlockStyle(block) {
+  switch (block.getType()) {
+    case "blockquote":
+      return "RichEditor-blockquote";
+    default:
+      return null;
+  }
+}
+
+
+export default RichEditor;

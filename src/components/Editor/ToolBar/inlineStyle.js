@@ -5,24 +5,10 @@ import { RichUtils } from "draft-js";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Button } from "@material-ui/core";
 
-const styles = {
-  buttonC: {
-    "border-radius": "10%",
-    padding: "5px",
 
-    "&:hover": {
-      "background-color": "rgb(235, 235, 190)",
-    },
-    "&$isActive":{
-      "background-color": "block",
-    },
-  },
-  buttonA: {
-    "border-radius": "10%",
-    padding: "5px",
-    "background-color": "rgb(245, 245, 169)",
-  },
-};
+
+
+
 class RenderInlineStyle extends Component {
   render() {
     const { classes } = this.props;
@@ -44,7 +30,7 @@ class RenderInlineStyle extends Component {
           return (
             <MyButton
               isActive={isActive(item.style)}
-              btnClassName={classes.buttonC}
+              
               name={item.style}
               tip={item.label}
               size="small"
@@ -60,4 +46,4 @@ class RenderInlineStyle extends Component {
   }
 }
 
-export default withStyles(styles)(RenderInlineStyle);
+export default RenderInlineStyle;
