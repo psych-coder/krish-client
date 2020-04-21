@@ -2,11 +2,6 @@ import React, { Fragment, Component } from "react";
 import MyButton from "../../../util/MyButton";
 import { inlineStyles } from "./constant";
 import { RichUtils } from "draft-js";
-import withStyles from "@material-ui/core/styles/withStyles";
-import { Button } from "@material-ui/core";
-
-
-
 
 
 class RenderInlineStyle extends Component {

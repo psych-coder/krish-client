@@ -6,6 +6,8 @@ const styles = {
     buttonC: {
       "border-radius": "10%",
       "margin-right":"2px",
+      "font-weight": "bold",
+      "font-size": "medium",
      // padding: "5px",
   
       "&:hover": {
@@ -18,6 +20,8 @@ const styles = {
      // padding: "5px",
       "background-color": "#FEEFC2",
       "margin-right":"2px",
+      "font-weight": "bold",
+      "font-size": "medium",
     },
   };
   class StyleButton extends React.Component {
@@ -41,7 +45,7 @@ const styles = {
 
          
         <IconButton className={className} onMouseDown={this.onToggle} size="small">
-         {this.props.icon}
+         {this.props.icon || this.props.label}
         </IconButton>
       );
     }

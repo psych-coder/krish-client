@@ -23,21 +23,8 @@ import {uploadImage } from '../../redux/actions/dataActions';
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 
-const styles = them => ({
-  ...them.spreadThis,
-  submitButton: {
-    position: 'relative',
-    float: 'right',
-    marginTop: 10
-  },
-  progressSpinner: {
-    position: 'absolute'
-  },
-  closeButton: {
-    position: 'absolute',
-    left: '91%',
-    top: '6%'
-  },
+const styles = theme => ({
+  ...theme.spreadThis,
   imgRoot: {
     maxWidth: 150,
   },

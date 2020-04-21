@@ -5,24 +5,26 @@ import FormatColorTextIcon from "@material-ui/icons/FormatColorText";
 import FormatSizeIcon from "@material-ui/icons/FormatSize";
 import FormatItalic from "@material-ui/icons/FormatItalic";
 
-
 const inlineStyles = [
-    {
-        label:"bold",
-        style:"BOLD",
-        icon: <FormatBold/>,
+  {
+    label: "bold",
+    style: "BOLD",
+    icon: <FormatBold />,
+  },
+  {
+    label: "italic",
+    style: "ITALIC",
+    icon: <FormatItalic />,
+  },
+  {
+    label: "underline",
+    style: "UNDERLINE",
+    icon: <FormatUnderlined />,
+  },
+  { 
+      label: "Monospace",
+       style: "CODE" 
     },
-    {
-        label:"italic",
-        style:"ITALIC",
-        icon: <FormatItalic/>,
-    },
-    {
-        label:"underline",
-        style:"UNDERLINE",
-        icon: <FormatUnderlined/>,
-    },
-    
-]
+];
 
-export {inlineStyles}
+export { inlineStyles };
