@@ -14,8 +14,8 @@ const BLOCK_TYPES = [
     { label: "Blockquote", style: "blockquote" },
     { label: "UL", style: "unordered-list-item", icon: <FormatListBulletedIcon /> },
     { label: "OL", style: "ordered-list-item",icon: <FormatListNumberedIcon />},
-    { label: "Code Block", style: "code-block", icon: <CodeIcon/>},
-  ];
+/*     { label: "Code Block", style: "code-block", icon: <CodeIcon/>},
+ */  ];
   
   class BlockStyleControls extends React.Component {
     render() {

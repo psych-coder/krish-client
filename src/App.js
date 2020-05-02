@@ -26,6 +26,7 @@ import axios from "axios";
 import MyEditor from "./components/Editor/MyEditor";
 import TestC from "./components/test/TestC";
 import RichEditorExample from "./components/RichEditor/RichEditor";
+import Parent from "./components/test/parent";
 
 const theme = createMuiTheme(themeFile);
 
@@ -61,6 +62,7 @@ class App extends Component {
                 <Route exact path="/info/:tagname" component={home} />
                 <Route exact path="/Editor" component={MyEditor} />
                 <Route exact path="/test" component={RichEditorExample} />
+                <Route exact path="/parent" component={Parent} />
                 <AuthRoute
                   exact
                   path="/login"

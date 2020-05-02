@@ -1,6 +1,6 @@
 
 export function getHashTags(inputText) {  
-    var regex = /(?:#)([a-zA-Z\d\_]+)/gm;
+    var regex = /(?:#)([a-zA-Z\d\_]+)/g;
     var matches = [];
     var match;
 
