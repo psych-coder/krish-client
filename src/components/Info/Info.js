@@ -80,7 +80,7 @@ class Info extends Component {
       }
     } = this.props;
 
-    const trimedBody = shortDesc.length > 300 ? shortDesc.substring(0, 300) + "..." : shortDesc;
+    const trimedBody = shortDesc.length > 100 ? shortDesc.substring(0, 100) + "..." : body;
     const imageAvaliable = cardImage !== undefined && cardImage.trim() !== "" ? (
 
 

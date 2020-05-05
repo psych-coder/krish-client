@@ -187,6 +187,7 @@ export const getInformation = (tagName) => dispatch => {
 
 
 export const postInfo = (newInfo) => (dispatch) =>{
+  debugger;
   dispatch({type : LOADING_UI});
   axios.post("/information", newInfo)
   .then(res =>{
@@ -205,9 +206,11 @@ export const postInfo = (newInfo) => (dispatch) =>{
 }
 
 export const uploadImage = (formData) => (dispatch) => {
-  dispatch({type : LOADING_UI});
+  debugger;
+  //dispatch({type : LOADING_UI});
   axios.post('/information/image',formData)
   .then(res => {
+    console.log(res);
      dispatch({
       type : SET_IMAGE,
       payload : res.data.imageURl

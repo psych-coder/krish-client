@@ -15,16 +15,13 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 //icons
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
-import EditIcon from "@material-ui/icons/Edit";
 import IconButton from '@material-ui/core/IconButton';
 
 import { postInfo, clearErrors } from "../../redux/actions/dataActions";
-import { uploadImage } from "../../redux/actions/dataActions";
 
 
 
@@ -65,17 +62,7 @@ class PostScream extends Component {
       this.setState({ body: "", title: "", file: "", open: false, errors: {} });
     }
   }
-  handleImageChange = (event) => {
-    const image = event.target.files[0];
-    const formData = new FormData();
-    formData.append("image", image, image.name);
-    this.props.uploadImage(formData);
-    this.setState({ open: true, errors: {} });
-  };
-  handleEditPicture = () => {
-    const fileInput = document.getElementById("imageInput");
-    fileInput.click();
-  };
+ 
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
@@ -87,23 +74,26 @@ class PostScream extends Component {
     this.setState({ open: false, errors: {} });
   };
 
+
   handleSubmit = (event,editorState) => {
     event.preventDefault();
     console.log(convertToHTML(editorState.getCurrentContent()));
     //console.log(getInfo.getFirstline(editorState));
     let rawContent = convertToRaw(editorState.getCurrentContent())
+    let htmlContent = convertToHTML(editorState.getCurrentContent());
 
     console.log(getInfo.getTitle(rawContent));
     console.log(getInfo.getShortDesc(rawContent));
+    console.log(getInfo.getHashTags(htmlContent));
     
-    /*  this.props.postInfo({
-      title: getInfo.getTitle(rawContent);
-      body: this.state.body,
-      tags: this.state.tags,
-      topic: this.state.topic,
+     this.props.postInfo({
+      title: getInfo.getTitle(rawContent),
+      body: htmlContent,
+      //tags: getInfo.getHashTags(htmlContent),
       cardImage: "",
+      shortDesc: getInfo.getShortDesc(rawContent),
       editorpick: this.state.editorpick,
-    });  */
+    });  
     window.history.pushState(null, null, "/kurangu");
   };
   render() {
@@ -144,7 +134,8 @@ class PostScream extends Component {
           <DialogContent>
             <form onSubmit={this.handleSubmit}>
               
-              <MyEditor handleSubmit={this.handleSubmit} />
+              <MyEditor handleSubmit={this.handleSubmit} loading={loading} />
+        
             </form>
           </DialogContent>
         </Dialog>
@@ -167,7 +158,6 @@ const mapStateToProps = (state) => ({
 const mapsActionsToProps = {
   postInfo,
   clearErrors,
-  uploadImage,
 };
 export default connect(
   mapStateToProps,

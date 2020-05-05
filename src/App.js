@@ -31,6 +31,7 @@ import Parent from "./components/test/parent";
 const theme = createMuiTheme(themeFile);
 
 axios.defaults.baseURL = "https://asia-east2-manithakurangu-338c3.cloudfunctions.net/api"
+//axios.defaults.baseURL = "http://localhost:5000/manithakurangu-338c3/asia-east2/api"
 
 const token = localStorage.FBIdToken;
 console.log(token);

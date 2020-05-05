@@ -1,17 +1,18 @@
 import React from "react";
 import { Editor, EditorState, RichUtils, ContentState } from "draft-js";
+import PropTypes from "prop-types";
 
 import withStyles from "@material-ui/core/styles/withStyles";
 
-import Grid from "@material-ui/core/Grid";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import InlineStyleControls from "./ToolBar/InlineStyleControls";
 import BlockStyleControls from "./ToolBar/BlockStyleControls";
 import Button from "@material-ui/core/Button";
 import MyButton from "../../util/MyButton";
 import EditIcon from "@material-ui/icons/Edit";
 
-import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
+import { uploadImage } from "../../redux/actions/dataActions";
+import { connect } from "react-redux";
 
 const styles = (theme) => ({
   ...theme.spreadThis,
@@ -82,7 +83,7 @@ class MyEditor extends React.Component {
 
   handleSubmit = (event) => {
     console.log(this.state.editorState);
-    this.props.handleSubmit(event,this.state.editorState);
+    this.props.handleSubmit(event, this.state.editorState);
   };
   _handleKeyCommand(command) {
     const { editorState } = this.state;
@@ -108,10 +109,21 @@ class MyEditor extends React.Component {
       RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle)
     );
   }
-
+  handleImageChange = (event) => {
+    debugger;
+    const image = event.target.files[0];
+    const formData = new FormData();
+    formData.append("image", image, image.name);
+    this.props.uploadImage(formData);
+  };
+  handleEditPicture = () => {
+    const fileInput = document.getElementById("imageInput");
+    fileInput.click();
+  };
   render() {
     const { classes } = this.props;
     const { editorState } = this.state;
+    const {  cardImage } = this.props.data;
 
     let className = "RichEditor-editor";
     var contentState = editorState.getCurrentContent();
@@ -120,7 +132,8 @@ class MyEditor extends React.Component {
         className += " RichEditor-hidePlaceholder";
       }
     }
-
+    console.log(cardImage);
+    
     return (
       <div className="RichEditor-root">
         <InlineStyleControls
@@ -144,7 +157,23 @@ class MyEditor extends React.Component {
             spellCheck={true}
           />
         </div>
+
         <div className={classes.submit}>
+          <input
+            type="file"
+            name="file"
+            id="imageInput"
+            hidden="hidden"
+            onChange={this.handleImageChange}
+          />
+
+          <MyButton
+            tip="Upload Image"
+            onClick={this.handleEditPicture}
+            btnClassName="button"
+          >
+            <EditIcon color="primary" />
+          </MyButton>
           <Button
             type="submit"
             variant="contained"
@@ -153,6 +182,9 @@ class MyEditor extends React.Component {
             onClick={this.handleSubmit}
           >
             Submit
+            {this.props.loading && (
+              <CircularProgress size={30} className={classes.progressSpinner} />
+            )}
           </Button>
           <Button
             type="button"
@@ -187,4 +219,21 @@ function getBlockStyle(block) {
       return null;
   }
 }
-export default withStyles(styles)(MyEditor);
+
+MyEditor.propTypes = {
+  
+  uploadImage: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  UI: state.UI,
+  data: state.data,
+});
+
+const mapsActionsToProps = {
+  uploadImage,
+};
+export default connect(
+  mapStateToProps,
+  mapsActionsToProps
+)(withStyles(styles)(MyEditor));
