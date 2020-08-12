@@ -21,6 +21,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import ActionMenu from "../Menu/ActionMenu";
 
 const styles = theme => ({
   root: {
@@ -30,12 +31,13 @@ const styles = theme => ({
     "box-shadow":"none",
     "border": "1px solid rgb(202, 202, 202);"
   },
+ 
   media: {
-    height: 0,
+   // height: '100%',
     margin: "auto",
-    //width:'500px',
+    width:'100%',
     //margin:"10%",
-    padding: "30%"
+    //padding: "30%"
   },
   expand: {
     transform: "rotate(0deg)",
@@ -68,7 +70,8 @@ class Info extends Component {
   render() {
     dayjs.extend(relativeTime);
     const { classes } = this.props;
-
+    const { authenticated } = this.props.user;
+   
     const {
       information: {
         //informationId,
@@ -84,7 +87,11 @@ class Info extends Component {
     const imageAvaliable = cardImage !== undefined && cardImage.trim() !== "" ? (
 
 
-        <CardMedia
+   
+
+       <CardMedia
+       component="img"
+       height="300"
           className={classes.media}
           image={cardImage}
         />
@@ -102,15 +109,13 @@ class Info extends Component {
             </Avatar>
           }
           action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
+            <ActionMenu showMenu={authenticated}/>
           }
           title={title}
           subheader={dayjs(createdAt).fromNow()}
         />
+       
         {imageAvaliable}
-
         <Collapse in={!this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent in={this.state.expanded.toString()}>
             <Typography paragraph color="textPrimary" component="p">
@@ -125,6 +130,7 @@ class Info extends Component {
             <Typography paragraph>{body}</Typography>
           </CardContent>
         </Collapse>
+        
         <CardActions disableSpacing>
           <IconButton aria-label="add to favorites">
             <FavoriteIcon />
@@ -140,7 +146,7 @@ class Info extends Component {
             aria-expanded={this.state.expanded}
             aria-label="show more"
           >
-            <ExpandMoreIcon />
+            
           </IconButton>) }
           
         </CardActions>

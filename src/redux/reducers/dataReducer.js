@@ -21,7 +21,8 @@ const initialState = {
   information: {},
   newsFeed : [],
   cardImage  :"",
-  tags:[]
+  tags:[],
+  imagedetails : {},
 };
 
 export default function(state = initialState, action) {
@@ -44,9 +45,10 @@ export default function(state = initialState, action) {
         loading: false
       };
       case SET_IMAGE:
+       // debugger;
       return {
         ...state,
-        cardImage: action.payload
+        imagedetails: action.payload
            };
     case SET_SCREAM:
       return {
@@ -54,7 +56,7 @@ export default function(state = initialState, action) {
         scream: action.payload
            };
     case POST_SCREAM:
-      debugger;
+      //debugger;
       return {
         ...state,
         screams: [
@@ -63,7 +65,7 @@ export default function(state = initialState, action) {
         ]
       }
       case POST_INFO:
-        debugger;
+        //debugger;
       return {
         ...state,
         informations: [

@@ -38,7 +38,7 @@ class Tags extends Component {
   render() {
     const { classes } = this.props;
     const { tags, loading } = this.props.data;
-    console.log(tags);
+    //console.log(tags);
 
     //const bgClass = selected={this.state.selectedTag===t.tag}
 

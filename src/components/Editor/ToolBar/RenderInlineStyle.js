@@ -14,10 +14,10 @@ class RenderInlineStyle extends Component {
     };
 
     const isActive = (style) => {
-      console.log(style);
+      //console.log(style);
       const currentStyle = editorState.getCurrentInlineStyle();
       currentStyle.has(style);
-      console.log(currentStyle.has(style))
+      //console.log(currentStyle.has(style))
     };
     return (
       <Fragment>

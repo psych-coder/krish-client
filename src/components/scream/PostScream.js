@@ -24,7 +24,6 @@ import IconButton from '@material-ui/core/IconButton';
 import { postInfo, clearErrors } from "../../redux/actions/dataActions";
 
 
-
 const styles = (theme) => ({
   ...theme.spreadThis,
   imgRoot: {
@@ -66,12 +65,17 @@ class PostScream extends Component {
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
-  handleOpen = () => {
+  handleOpen = (dispatch) => {
     this.setState({ open: true });
+    
   };
-  handleClose = () => {
+  handleClose = (dispatch) => {
+    console.log(this.props.imageloading);
+    console.log(this.state.open);
+
     this.props.clearErrors();
     this.setState({ open: false, errors: {} });
+    
   };
 
 
@@ -85,14 +89,19 @@ class PostScream extends Component {
     console.log(getInfo.getTitle(rawContent));
     console.log(getInfo.getShortDesc(rawContent));
     console.log(getInfo.getHashTags(htmlContent));
-    
+    console.log(this.props.data.imagedetails);
+
+
      this.props.postInfo({
       title: getInfo.getTitle(rawContent),
       body: htmlContent,
       //tags: getInfo.getHashTags(htmlContent),
-      cardImage: "",
+     
+
+      cardImage: this.props.data.imagedetails.imageURl,
       shortDesc: getInfo.getShortDesc(rawContent),
       editorpick: this.state.editorpick,
+      imageName: this.props.data.imagedetails.filename,
     });  
     window.history.pushState(null, null, "/kurangu");
   };
@@ -101,17 +110,18 @@ class PostScream extends Component {
 
     const {
       classes,
-      UI: { loading },
+      UI: { imageloading,loading },
     } = this.props;
 
-    const { cardImage } = this.props.data;
 
+    //const { cardImage, filename } = this.props.data;
+  
     return (
       <Fragment>
         <MyButton onClick={this.handleOpen} tip="Post a news">
           <AddIcon />
         </MyButton>
-        <Dialog open={this.state.open} onClose={this.handleClose} fullWidth>
+        <Dialog open={this.state.open || imageloading } onClose={this.handleClose} fullWidth>
           <DialogTitle onClose={this.handleClose}>
             <Typography variant="h6">Post your content</Typography>
             {this.onClose ? (
@@ -134,7 +144,7 @@ class PostScream extends Component {
           <DialogContent>
             <form onSubmit={this.handleSubmit}>
               
-              <MyEditor handleSubmit={this.handleSubmit} loading={loading} />
+              <MyEditor handleSubmit={this.handleSubmit} loading={loading} imageloading={imageloading}/>
         
             </form>
           </DialogContent>

@@ -9,10 +9,16 @@ import InlineStyleControls from "./ToolBar/InlineStyleControls";
 import BlockStyleControls from "./ToolBar/BlockStyleControls";
 import Button from "@material-ui/core/Button";
 import MyButton from "../../util/MyButton";
+import ImgCard from "./imgcard";
 import EditIcon from "@material-ui/icons/Edit";
 
 import { uploadImage } from "../../redux/actions/dataActions";
 import { connect } from "react-redux";
+
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
+import { CardContent } from "@material-ui/core";
 
 const styles = (theme) => ({
   ...theme.spreadThis,
@@ -48,16 +54,6 @@ const styles = (theme) => ({
     "margin-right": "5px",
     "margin-top": "10px",
   },
-  imgRoot: {
-    maxWidth: 150,
-  },
-  imgMedia: {
-    height: 0,
-    margin: "auto",
-    //width:'500px',
-    //margin:"10%",
-    padding: "30%",
-  },
 });
 class MyEditor extends React.Component {
   constructor(props) {
@@ -82,8 +78,8 @@ class MyEditor extends React.Component {
   };
 
   handleSubmit = (event) => {
-    console.log(this.state.editorState);
-    this.props.handleSubmit(event, this.state.editorState);
+    //console.log(this.state.editorState);
+    this.props.handleSubmit(event, this.state.editorState,);
   };
   _handleKeyCommand(command) {
     const { editorState } = this.state;
@@ -110,11 +106,13 @@ class MyEditor extends React.Component {
     );
   }
   handleImageChange = (event) => {
-    debugger;
     const image = event.target.files[0];
-    const formData = new FormData();
-    formData.append("image", image, image.name);
-    this.props.uploadImage(formData);
+    if (image) {
+      const formData = new FormData();
+      this.setState({ filename: image.name });
+      formData.append("image", image, image.name);
+      this.props.uploadImage(formData);
+    }
   };
   handleEditPicture = () => {
     const fileInput = document.getElementById("imageInput");
@@ -122,8 +120,9 @@ class MyEditor extends React.Component {
   };
   render() {
     const { classes } = this.props;
-    const { editorState } = this.state;
-    const {  cardImage } = this.props.data;
+    const { editorState, name } = this.state;
+    //const { filename } = this.props.data;
+    const { imageURl,filename } = this.props.data.imagedetails;
 
     let className = "RichEditor-editor";
     var contentState = editorState.getCurrentContent();
@@ -132,8 +131,8 @@ class MyEditor extends React.Component {
         className += " RichEditor-hidePlaceholder";
       }
     }
-    console.log(cardImage);
-    
+    //console.log(cardImage);
+
     return (
       <div className="RichEditor-root">
         <InlineStyleControls
@@ -157,6 +156,10 @@ class MyEditor extends React.Component {
             spellCheck={true}
           />
         </div>
+
+        {this.props.imageloading && (
+          <ImgCard image={imageURl} filename={name} loading={this.props.imageloading} />
+        )}
 
         <div className={classes.submit}>
           <input
@@ -221,7 +224,6 @@ function getBlockStyle(block) {
 }
 
 MyEditor.propTypes = {
-  
   uploadImage: PropTypes.func.isRequired,
 };
 

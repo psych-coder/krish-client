@@ -15,6 +15,8 @@ import {
   POST_INFO,
   SET_IMAGE,
   SET_TAGS,
+  IMAGE_LOADING,
+  STOP_IMAGE_LOADING,
 } from "../types";
 import axios from "axios";
 
@@ -195,7 +197,8 @@ export const postInfo = (newInfo) => (dispatch) =>{
       type : POST_INFO,
       payload : res.data
     });
-    dispatch(clearErrors())
+    dispatch({type: STOP_IMAGE_LOADING});
+    dispatch(clearErrors())    
   })
   .catch(err => {
     dispatch({
@@ -206,15 +209,15 @@ export const postInfo = (newInfo) => (dispatch) =>{
 }
 
 export const uploadImage = (formData) => (dispatch) => {
-  debugger;
-  //dispatch({type : LOADING_UI});
+  dispatch({type : IMAGE_LOADING});
   axios.post('/information/image',formData)
   .then(res => {
-    console.log(res);
+    //console.log(res.data);
      dispatch({
       type : SET_IMAGE,
-      payload : res.data.imageURl
+      payload : res.data
     });
+    //dispatch({type: STOP_IMAGE_LOADING});
   })
   .catch(err => console.log(err))
 }

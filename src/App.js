@@ -27,6 +27,7 @@ import MyEditor from "./components/Editor/MyEditor";
 import TestC from "./components/test/TestC";
 import RichEditorExample from "./components/RichEditor/RichEditor";
 import Parent from "./components/test/parent";
+import imgcard from "./components/test/imgcard";
 
 const theme = createMuiTheme(themeFile);
 
@@ -34,7 +35,7 @@ axios.defaults.baseURL = "https://asia-east2-manithakurangu-338c3.cloudfunctions
 //axios.defaults.baseURL = "http://localhost:5000/manithakurangu-338c3/asia-east2/api"
 
 const token = localStorage.FBIdToken;
-console.log(token);
+//console.log(token);
 if (token) {
   const decodeToken = jwtDecode(token);
   if (decodeToken.exp * 1000 < Date.now()) {
@@ -49,7 +50,7 @@ if (token) {
 
 class App extends Component {
   render() {
-    console.log(this.props.location)
+    //console.log(this.props.location)
     return (
       <MuiThemeProvider theme={theme}>
         <Provider store={store}>
@@ -63,6 +64,7 @@ class App extends Component {
                 <Route exact path="/info/:tagname" component={home} />
                 <Route exact path="/Editor" component={MyEditor} />
                 <Route exact path="/test" component={RichEditorExample} />
+                <Route exact path="/divtest" component={imgcard} />
                 <Route exact path="/parent" component={Parent} />
                 <AuthRoute
                   exact
