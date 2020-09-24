@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import MyButton from "../../util/MyButton";
 import MyEditor from "../Editor/MyEditor";
-import { convertToHTML } from 'draft-convert';
+import { convertToHTML } from "draft-convert";
 import { convertToRaw } from "draft-js";
-import  getInfo  from '../../util/getInfo';
+import getInfo from "../../util/getInfo";
 
 //Mui Imports
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -19,10 +19,10 @@ import Typography from "@material-ui/core/Typography";
 //icons
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
-import IconButton from '@material-ui/core/IconButton';
+import IconButton from "@material-ui/core/IconButton";
+import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 
 import { postInfo, clearErrors } from "../../redux/actions/dataActions";
-
 
 const styles = (theme) => ({
   ...theme.spreadThis,
@@ -36,14 +36,14 @@ const styles = (theme) => ({
     //margin:"10%",
     padding: "30%",
   },
-  closeButton:{
-    position: 'absolute',
+  closeButton: {
+    position: "absolute",
     right: theme.spacing(1),
     top: theme.spacing(1),
     color: theme.palette.grey[500],
-  }
+  },
 });
-class PostScream extends Component {
+class PostInfo extends Component {
   state = {
     open: false,
     body: "",
@@ -61,13 +61,12 @@ class PostScream extends Component {
       this.setState({ body: "", title: "", file: "", open: false, errors: {} });
     }
   }
- 
+
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
   handleOpen = (dispatch) => {
     this.setState({ open: true });
-    
   };
   handleClose = (dispatch) => {
     console.log(this.props.imageloading);
@@ -75,15 +74,13 @@ class PostScream extends Component {
 
     this.props.clearErrors();
     this.setState({ open: false, errors: {} });
-    
   };
 
-
-  handleSubmit = (event,editorState) => {
+  handleSubmit = (event, editorState) => {
     event.preventDefault();
     console.log(convertToHTML(editorState.getCurrentContent()));
     //console.log(getInfo.getFirstline(editorState));
-    let rawContent = convertToRaw(editorState.getCurrentContent())
+    let rawContent = convertToRaw(editorState.getCurrentContent());
     let htmlContent = convertToHTML(editorState.getCurrentContent());
 
     console.log(getInfo.getTitle(rawContent));
@@ -91,18 +88,16 @@ class PostScream extends Component {
     console.log(getInfo.getHashTags(htmlContent));
     console.log(this.props.data.imagedetails);
 
-
-     this.props.postInfo({
+    this.props.postInfo({
       title: getInfo.getTitle(rawContent),
       body: htmlContent,
       //tags: getInfo.getHashTags(htmlContent),
-     
 
       cardImage: this.props.data.imagedetails.imageURl,
       shortDesc: getInfo.getShortDesc(rawContent),
       editorpick: this.state.editorpick,
       imageName: this.props.data.imagedetails.filename,
-    });  
+    });
     window.history.pushState(null, null, "/kurangu");
   };
   render() {
@@ -110,18 +105,27 @@ class PostScream extends Component {
 
     const {
       classes,
-      UI: { imageloading,loading },
+      UI: { imageloading, loading },
     } = this.props;
 
-
     //const { cardImage, filename } = this.props.data;
-  
+
+    let createEdit = this.props.infoId ? (
+      <EditOutlinedIcon color="primary" />
+    ) : (
+      <AddIcon />
+    );
+
     return (
       <Fragment>
         <MyButton onClick={this.handleOpen} tip="Post a news">
-          <AddIcon />
+          {createEdit}
         </MyButton>
-        <Dialog open={this.state.open || imageloading } onClose={this.handleClose} fullWidth>
+        <Dialog
+          open={this.state.open || imageloading}
+          onClose={this.handleClose}
+          fullWidth
+        >
           <DialogTitle onClose={this.handleClose}>
             <Typography variant="h6">Post your content</Typography>
             {this.onClose ? (
@@ -143,9 +147,11 @@ class PostScream extends Component {
           </MyButton>
           <DialogContent>
             <form onSubmit={this.handleSubmit}>
-              
-              <MyEditor handleSubmit={this.handleSubmit} loading={loading} imageloading={imageloading}/>
-        
+              <MyEditor
+                handleSubmit={this.handleSubmit}
+                loading={loading}
+                imageloading={imageloading}
+              />
             </form>
           </DialogContent>
         </Dialog>
@@ -154,7 +160,7 @@ class PostScream extends Component {
   }
 }
 
-PostScream.propTypes = {
+PostInfo.propTypes = {
   postInfo: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   loading: PropTypes.object,
@@ -172,4 +178,4 @@ const mapsActionsToProps = {
 export default connect(
   mapStateToProps,
   mapsActionsToProps
-)(withStyles(styles)(PostScream));
+)(withStyles(styles)(PostInfo));

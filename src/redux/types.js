@@ -21,6 +21,7 @@ export const UNLIKE_SCREAM = 'UNLIKE_SCREAM';
 export const DELETE_SCREAM = 'DELETE_SCREAM';
 export const POST_SCREAM = 'POST_SCREAM';
 export const POST_INFO = 'POST_INFO';
+export const DELETE_INFO = 'DELETE_INFO';
 export const SUBMIT_COMMENT = 'SUBMIT_COMMENT';
 export const SET_INFORMATION = 'SET_INFORMATION';
 export const SET_INFORMATIONS = 'SET_INFORMATIONS';

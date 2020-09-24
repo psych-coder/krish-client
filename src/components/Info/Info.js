@@ -71,10 +71,10 @@ class Info extends Component {
     dayjs.extend(relativeTime);
     const { classes } = this.props;
     const { authenticated } = this.props.user;
-   
+    console.log(authenticated);
     const {
       information: {
-        //informationId,
+        informationId,
         title,
         body,
         createdAt,
@@ -85,9 +85,6 @@ class Info extends Component {
 
     const trimedBody = shortDesc.length > 100 ? shortDesc.substring(0, 100) + "..." : body;
     const imageAvaliable = cardImage !== undefined && cardImage.trim() !== "" ? (
-
-
-   
 
        <CardMedia
        component="img"
@@ -109,7 +106,7 @@ class Info extends Component {
             </Avatar>
           }
           action={
-            <ActionMenu showMenu={authenticated}/>
+            <ActionMenu showMenu={authenticated} informationId={informationId} />
           }
           title={title}
           subheader={dayjs(createdAt).fromNow()}

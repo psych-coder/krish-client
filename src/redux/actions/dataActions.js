@@ -17,6 +17,7 @@ import {
   SET_TAGS,
   IMAGE_LOADING,
   STOP_IMAGE_LOADING,
+  DELETE_INFO,
 } from "../types";
 import axios from "axios";
 
@@ -189,7 +190,7 @@ export const getInformation = (tagName) => dispatch => {
 
 
 export const postInfo = (newInfo) => (dispatch) =>{
-  debugger;
+  //debugger;
   dispatch({type : LOADING_UI});
   axios.post("/information", newInfo)
   .then(res =>{
@@ -203,7 +204,7 @@ export const postInfo = (newInfo) => (dispatch) =>{
   .catch(err => {
     dispatch({
       type: SET_ERRORS,
-      payload : err.response.data
+      payload : err.response
     })
   })
 }
@@ -237,5 +238,20 @@ export const getTags = () => dispatch => {
         type: SET_TAGS,
         payload: []
       });
+    });
+};
+
+//Delete Scream
+export const deletePost = id => dispatch => {
+  axios
+    .delete(`/information/${id}`)
+    .then(res => {
+      dispatch({
+        type: DELETE_INFO,
+        payload: id
+      });
+    })
+    .catch(err => {
+      console.log(err);
     });
 };

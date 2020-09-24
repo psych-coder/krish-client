@@ -11,6 +11,7 @@ import {
   POST_INFO,
   SET_IMAGE,
   SET_TAGS,
+  DELETE_INFO,
 } from "../types";
 
 const initialState = {
@@ -19,95 +20,97 @@ const initialState = {
   loading: false,
   informations: [],
   information: {},
-  newsFeed : [],
-  cardImage  :"",
-  tags:[],
-  imagedetails : {},
+  newsFeed: [],
+  cardImage: "",
+  tags: [],
+  imagedetails: {},
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case SET_TAGS:
       return {
         ...state,
-        tags: action.payload
-           };
+        tags: action.payload,
+      };
     case SET_INFORMATIONS:
       return {
         ...state,
         informations: action.payload,
-        loading: false
+        loading: false,
+      };
+    case DELETE_INFO:
+      let index = state.informations.findIndex(
+        (information) => information.informationId === action.payload
+      );
+      state.informations.splice(index, 1);
+      return {
+        ...state,
       };
     case SET_SCREAMS:
       return {
         ...state,
         screams: action.payload,
-        loading: false
+        loading: false,
       };
-      case SET_IMAGE:
-       // debugger;
+    case SET_IMAGE:
+      // debugger;
       return {
         ...state,
-        imagedetails: action.payload
-           };
+        imagedetails: action.payload,
+      };
     case SET_SCREAM:
       return {
         ...state,
-        scream: action.payload
-           };
+        scream: action.payload,
+      };
     case POST_SCREAM:
       //debugger;
       return {
         ...state,
-        screams: [
-          action.payload,
-          ...state.screams
-        ]
-      }
-      case POST_INFO:
-        //debugger;
+        screams: [action.payload, ...state.screams],
+      };
+    case POST_INFO:
+      //debugger;
       return {
         ...state,
-        informations: [
-          action.payload,
-          ...state.informations
-        ]
-      }
+        informations: [action.payload, ...state.informations],
+      };
     case LOADING_DATA:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case LIKE_SCREAM:
     case UNLIKE_SCREAM: {
-      let index = state.screams.findIndex(
-        scream => scream.screamId === action.payload.screamId
+      index = state.screams.findIndex(
+        (scream) => scream.screamId === action.payload.screamId
       );
       state.screams[index] = action.payload;
-      if(state.scream.screamId === action.payload.screamId) {
-        state.scream = action.payload
+      if (state.scream.screamId === action.payload.screamId) {
+        state.scream = action.payload;
       }
       return {
-        ...state
+        ...state,
       };
     }
     case SUBMIT_COMMENT:
-      return{
+      return {
         ...state,
-        scream:{
+        scream: {
           ...state.scream,
-          comments :[action.payload, ...state.scream.comments]
-        }
-
-      }
+          comments: [action.payload, ...state.scream.comments],
+        },
+      };
     case DELETE_SCREAM:
-        let index = state.screams.findIndex(scream =>
-            scream.screamId === action.payload
-         );
-         state.screams.splice(index,1);
-         return{
-             ...state 
-         }
+      index = state.screams.findIndex(
+        (scream) => scream.screamId === action.payload
+      );
+      state.screams.splice(index, 1);
+      return {
+        ...state,
+      };
+
     default:
       return state;
   }
