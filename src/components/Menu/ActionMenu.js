@@ -31,7 +31,7 @@ class ActionMenu extends Component {
     this.setState({ anchorEl: event.target });
   };
   handleClose = (event, option) => {
-    console.log(option.option);
+    //console.log(option.option);
     this.setState({ anchorEl: null });
   };
 
@@ -51,6 +51,8 @@ class ActionMenu extends Component {
 
     const id = this.props.informationId;
 
+    //console.log(this.props.information);
+
     return (
       <Fragment>
         {showActionIcon}
@@ -65,7 +67,7 @@ class ActionMenu extends Component {
         >
         <MenuItem>
        {/*  <EditInfo infoId={id} /> */}
-        <PostInfo infoId={id}  />
+        <PostInfo infoId={id} information={this.props.information} />
         </MenuItem>
         <MenuItem>
         <DeleteInfo infoId={id} />

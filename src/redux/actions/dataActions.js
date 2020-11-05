@@ -18,6 +18,7 @@ import {
   IMAGE_LOADING,
   STOP_IMAGE_LOADING,
   DELETE_INFO,
+  SET_POST,
 } from "../types";
 import axios from "axios";
 
@@ -41,25 +42,6 @@ export const getScreams = () => dispatch => {
     });
 };
 
-//Post a scream
-
-export const postScream = (newScream) => (dispatch) =>{
-  dispatch({type : LOADING_UI});
-  axios.post("/scream", newScream)
-  .then(res =>{
-    dispatch({
-      type : POST_SCREAM,
-      payload : res.data
-    });
-    dispatch(clearErrors())
-  })
-  .catch(err => {
-    dispatch({
-      type: SET_ERRORS,
-      payload : err.response.data
-    })
-  })
-}
 
 //get a Scream
 
@@ -189,10 +171,67 @@ export const getInformation = (tagName) => dispatch => {
 };
 
 
+export const getPost = (id) => dispatch => {
+
+  //debugger;
+  //let path = `/informations/${id}`
+  axios.get(`/information/${id}`)
+  .then(res => {
+    dispatch({
+      type : SET_POST,
+      payload: res.data
+    })
+   // dispatch({type: STOP_LOADING_UI});
+  })
+  .catch(err => console.log(err));
+};
+
+
+
+//Post a scream
+
+export const postScream = (newScream) => (dispatch) =>{
+  dispatch({type : LOADING_UI});
+  axios.post("/scream", newScream)
+  .then(res =>{
+    dispatch({
+      type : POST_SCREAM,
+      payload : res.data
+    });
+    dispatch(clearErrors())
+  })
+  .catch(err => {
+    dispatch({
+      type: SET_ERRORS,
+      payload : err.response.data
+    })
+  })
+}
+
 export const postInfo = (newInfo) => (dispatch) =>{
   //debugger;
   dispatch({type : LOADING_UI});
   axios.post("/information", newInfo)
+  .then(res =>{
+    dispatch({
+      type : POST_INFO,
+      payload : res.data
+    });
+    //dispatch({type: STOP_IMAGE_LOADING});
+    dispatch(clearErrors())    
+  })
+  .catch(err => {
+    dispatch({
+      type: SET_ERRORS,
+      payload : err.response.data
+    })
+  })
+}
+
+export const updateInfo = (id) => (dispatch) =>{
+  //debugger;
+  dispatch({type : LOADING_UI});
+  axios.put(`/information/${id}`)
   .then(res =>{
     dispatch({
       type : POST_INFO,
@@ -208,7 +247,6 @@ export const postInfo = (newInfo) => (dispatch) =>{
     })
   })
 }
-
 export const uploadImage = (formData) => (dispatch) => {
   dispatch({type : IMAGE_LOADING});
   axios.post('/information/image',formData)

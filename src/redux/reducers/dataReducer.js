@@ -12,6 +12,7 @@ import {
   SET_IMAGE,
   SET_TAGS,
   DELETE_INFO,
+  SET_POST,
 } from "../types";
 
 const initialState = {
@@ -27,6 +28,7 @@ const initialState = {
 };
 
 export default function (state = initialState, action) {
+  //debugger;
   switch (action.type) {
     case SET_TAGS:
       return {
@@ -38,6 +40,11 @@ export default function (state = initialState, action) {
         ...state,
         informations: action.payload,
         loading: false,
+      };
+    case SET_POST:
+      return {
+        ...state,
+        information: action.payload,
       };
     case DELETE_INFO:
       let index = state.informations.findIndex(

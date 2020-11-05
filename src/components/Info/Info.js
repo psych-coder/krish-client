@@ -106,7 +106,7 @@ class Info extends Component {
             </Avatar>
           }
           action={
-            <ActionMenu showMenu={authenticated} informationId={informationId} />
+            <ActionMenu showMenu={authenticated} informationId={informationId} information={this.props.information} />
           }
           title={title}
           subheader={dayjs(createdAt).fromNow()}

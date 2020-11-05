@@ -1,5 +1,7 @@
 import React from "react";
 import { Editor, EditorState, RichUtils, ContentState } from "draft-js";
+import {stateFromHTML} from 'draft-js-import-html';
+
 import PropTypes from "prop-types";
 
 import withStyles from "@material-ui/core/styles/withStyles";
@@ -14,6 +16,7 @@ import EditIcon from "@material-ui/icons/Edit";
 
 import { uploadImage } from "../../redux/actions/dataActions";
 import { connect } from "react-redux";
+import { convertFromHTML } from "draft-convert";
 
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -58,10 +61,24 @@ const styles = (theme) => ({
 class MyEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { editorState: EditorState.createEmpty() };
+    if(!this.props.information){
+      this.state = { editorState: EditorState.createEmpty() };
+    }
+    else{
 
+      this.state={mode:"update"}
+     
+      const contentState  = stateFromHTML(this.props.information.body);
+
+      
+     this.state = {
+      editorState: EditorState.createWithContent(contentState),
+    };
+    }
+   
+  
     this.focus = () => this.refs.editor.focus();
-    this.onChange = (editorState) => this.setState({ editorState });
+    this.onChange = (editorState) => { this.setState({ editorState }) };
 
     this.handleKeyCommand = (command) => this._handleKeyCommand(command);
     this.onTab = (e) => this._onTab(e);
@@ -78,8 +95,9 @@ class MyEditor extends React.Component {
   };
 
   handleSubmit = (event) => {
+    //debugger;
     //console.log(this.state.editorState);
-    this.props.handleSubmit(event, this.state.editorState,);
+    this.props.handleSubmit(event, this.state.editorState);
   };
   _handleKeyCommand(command) {
     const { editorState } = this.state;
@@ -118,12 +136,43 @@ class MyEditor extends React.Component {
     const fileInput = document.getElementById("imageInput");
     fileInput.click();
   };
+
+  /* componentDidMount(){
+
+    const plainText = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.';
+    const content = ContentState.createFromText(plainText);
+
+    //this.state = { editorState: EditorState.createWithContent(content)};
+    console.log(this.props.data.information);
+    this.setState({ editorState: EditorState.createWithContent(content)} );
+
+  }
+ */
   render() {
     const { classes } = this.props;
-    const { editorState, name } = this.state;
+    const { editorState, name, mode = "create" } = this.state;
     //const { filename } = this.props.data;
     const { imageURl,filename } = this.props.data.imagedetails;
 
+    console.log("----------------------");
+    
+
+
+    const {
+      information: {
+        informationId,
+        title,
+        body,
+        createdAt,
+        cardImage,
+        shortDesc
+      }
+    } = this.props.data;
+    //console.log(body);
+
+  
+  
+    
     let className = "RichEditor-editor";
     var contentState = editorState.getCurrentContent();
     if (!contentState.hasText()) {

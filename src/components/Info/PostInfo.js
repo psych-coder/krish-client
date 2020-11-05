@@ -22,7 +22,11 @@ import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 
-import { postInfo, clearErrors } from "../../redux/actions/dataActions";
+import {
+  getPost,
+  postInfo,
+  clearErrors,
+} from "../../redux/actions/dataActions";
 
 const styles = (theme) => ({
   ...theme.spreadThis,
@@ -52,6 +56,7 @@ class PostInfo extends Component {
     tags: "",
     editorpick: false,
     errors: {},
+    postConten: "",
   };
   componentWillReceiveProps(nextprops) {
     if (nextprops.UI.errors) {
@@ -67,10 +72,12 @@ class PostInfo extends Component {
   };
   handleOpen = (dispatch) => {
     this.setState({ open: true });
+    //this.props.getPost(this.props.infoId);
+    //this.setState({ postConten: true });
   };
   handleClose = (dispatch) => {
-    console.log(this.props.imageloading);
-    console.log(this.state.open);
+    // console.log(this.props.imageloading);
+    // console.log(this.state.open);
 
     this.props.clearErrors();
     this.setState({ open: false, errors: {} });
@@ -83,10 +90,10 @@ class PostInfo extends Component {
     let rawContent = convertToRaw(editorState.getCurrentContent());
     let htmlContent = convertToHTML(editorState.getCurrentContent());
 
-    console.log(getInfo.getTitle(rawContent));
-    console.log(getInfo.getShortDesc(rawContent));
-    console.log(getInfo.getHashTags(htmlContent));
-    console.log(this.props.data.imagedetails);
+    // console.log(getInfo.getTitle(rawContent));
+    // console.log(getInfo.getShortDesc(rawContent));
+    // console.log(getInfo.getHashTags(htmlContent));
+    // console.log(this.props.data.imagedetails);
 
     this.props.postInfo({
       title: getInfo.getTitle(rawContent),
@@ -108,6 +115,7 @@ class PostInfo extends Component {
       UI: { imageloading, loading },
     } = this.props;
 
+    //console.log(this.props.information);
     //const { cardImage, filename } = this.props.data;
 
     let createEdit = this.props.infoId ? (
@@ -151,6 +159,7 @@ class PostInfo extends Component {
                 handleSubmit={this.handleSubmit}
                 loading={loading}
                 imageloading={imageloading}
+                information={this.props.information}
               />
             </form>
           </DialogContent>
@@ -162,6 +171,7 @@ class PostInfo extends Component {
 
 PostInfo.propTypes = {
   postInfo: PropTypes.func.isRequired,
+  getPost: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   loading: PropTypes.object,
   uploadImage: PropTypes.func.isRequired,
@@ -173,6 +183,7 @@ const mapStateToProps = (state) => ({
 
 const mapsActionsToProps = {
   postInfo,
+  getPost,
   clearErrors,
 };
 export default connect(
