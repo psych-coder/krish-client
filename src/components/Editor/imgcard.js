@@ -17,7 +17,7 @@ const styles = (theme) => ({
     flexGrow: 21,
     background: "#FFF",
     //height: "75px",
-    marginTop: "25px",
+    marginTop: "9px",
     //maxWidth:"50%",
   },
   text: {

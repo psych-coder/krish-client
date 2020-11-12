@@ -1,15 +1,18 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
+
 //redux
 import { connect } from "react-redux";
 import MyButton from "../../util/MyButton";
+import {Link} from 'react-router-dom';
+
+
+/* 
+import getInfo from "../../util/getInfo";
+
 import MyEditor from "../Editor/MyEditor";
 import { convertToHTML } from "draft-convert";
 import { convertToRaw } from "draft-js";
-import getInfo from "../../util/getInfo";
-
-//Mui Imports
-import withStyles from "@material-ui/core/styles/withStyles";
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -17,9 +20,16 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
 
 //icons
+
+
+*/
+
+//Mui Imports
+import withStyles from "@material-ui/core/styles/withStyles";
 import AddIcon from "@material-ui/icons/Add";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
+
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 
 import {
@@ -83,22 +93,17 @@ class PostInfo extends Component {
     this.setState({ open: false, errors: {} });
   };
 
-  handleSubmit = (event, editorState) => {
+  /* handleSubmit = (event, editorState) => {
     event.preventDefault();
-    console.log(convertToHTML(editorState.getCurrentContent()));
-    //console.log(getInfo.getFirstline(editorState));
+   
     let rawContent = convertToRaw(editorState.getCurrentContent());
     let htmlContent = convertToHTML(editorState.getCurrentContent());
 
-    // console.log(getInfo.getTitle(rawContent));
-    // console.log(getInfo.getShortDesc(rawContent));
-    // console.log(getInfo.getHashTags(htmlContent));
-    // console.log(this.props.data.imagedetails);
-
+   
     this.props.postInfo({
       title: getInfo.getTitle(rawContent),
       body: htmlContent,
-      //tags: getInfo.getHashTags(htmlContent),
+      
 
       cardImage: this.props.data.imagedetails.imageURl,
       shortDesc: getInfo.getShortDesc(rawContent),
@@ -106,30 +111,34 @@ class PostInfo extends Component {
       imageName: this.props.data.imagedetails.filename,
     });
     window.history.pushState(null, null, "/kurangu");
-  };
+  }; */
   render() {
     const { errors } = this.state;
 
     const {
       classes,
-      UI: { imageloading, loading },
+      data: { imageloading, loading },
     } = this.props;
 
-    //console.log(this.props.information);
-    //const { cardImage, filename } = this.props.data;
-
+   
+    let mode =  this.props.infoId ? "update" :"create";
     let createEdit = this.props.infoId ? (
       <EditOutlinedIcon color="primary" />
+     
     ) : (
       <AddIcon />
     );
 
     return (
       <Fragment>
+      <Link to="/Editor">
         <MyButton onClick={this.handleOpen} tip="Post a news">
           {createEdit}
         </MyButton>
-        <Dialog
+        </Link>
+
+        
+       {/*  <Dialog
           open={this.state.open || imageloading}
           onClose={this.handleClose}
           fullWidth
@@ -160,10 +169,11 @@ class PostInfo extends Component {
                 loading={loading}
                 imageloading={imageloading}
                 information={this.props.information}
+                mode={mode}
               />
             </form>
           </DialogContent>
-        </Dialog>
+        </Dialog> */}
       </Fragment>
     );
   }

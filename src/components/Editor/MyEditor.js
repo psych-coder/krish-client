@@ -1,6 +1,6 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Editor, EditorState, RichUtils, ContentState } from "draft-js";
-import {stateFromHTML} from 'draft-js-import-html';
+import { stateFromHTML } from "draft-js-import-html";
 
 import PropTypes from "prop-types";
 
@@ -10,18 +10,15 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import InlineStyleControls from "./ToolBar/InlineStyleControls";
 import BlockStyleControls from "./ToolBar/BlockStyleControls";
 import Button from "@material-ui/core/Button";
-import MyButton from "../../util/MyButton";
-import ImgCard from "./imgcard";
-import EditIcon from "@material-ui/icons/Edit";
+import Typography from "@material-ui/core/Typography";
+import { convertToHTML } from "draft-convert";
+import { convertToRaw } from "draft-js";
+import getInfo from "../../util/getInfo";
 
-import { uploadImage } from "../../redux/actions/dataActions";
 import { connect } from "react-redux";
-import { convertFromHTML } from "draft-convert";
 
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
-import { CardContent } from "@material-ui/core";
+import UploadImage from "./UploadImage";
+import {postInfo,} from "../../redux/actions/dataActions";
 
 const styles = (theme) => ({
   ...theme.spreadThis,
@@ -59,26 +56,28 @@ const styles = (theme) => ({
   },
 });
 class MyEditor extends React.Component {
+
   constructor(props) {
     super(props);
-    if(!this.props.information){
-      this.state = { editorState: EditorState.createEmpty() };
-    }
-    else{
+    
+    console.log(this.state);
 
-      this.state={mode:"update"}
-     
-      const contentState  = stateFromHTML(this.props.information.body);
+    if (!this.props.information || this.props.UI.mode === "create") {
+      this.state = { editorState: EditorState.createEmpty(), editorpick: false, };
+    } else {
+      //this.state = { mode: "update" };
 
-      
-     this.state = {
-      editorState: EditorState.createWithContent(contentState),
-    };
+      const contentState = stateFromHTML(this.props.information.body);
+
+      this.state = {
+        editorState: EditorState.createWithContent(contentState),
+      };
     }
-   
-  
+
     this.focus = () => this.refs.editor.focus();
-    this.onChange = (editorState) => { this.setState({ editorState }) };
+    this.onChange = (editorState) => {
+      this.setState({ editorState });
+    };
 
     this.handleKeyCommand = (command) => this._handleKeyCommand(command);
     this.onTab = (e) => this._onTab(e);
@@ -97,8 +96,27 @@ class MyEditor extends React.Component {
   handleSubmit = (event) => {
     //debugger;
     //console.log(this.state.editorState);
-    this.props.handleSubmit(event, this.state.editorState);
+    //this.props.handleSubmit(event, this.state.editorState);
+
+    event.preventDefault();
+     
+      let rawContent = convertToRaw(this.state.editorState.getCurrentContent());
+      let htmlContent = convertToHTML(this.state.editorState.getCurrentContent());
+  
+      console.log(this.props)
+      let cardImage = !this.props.data.imagedetails ?  "" : this.props.data.imagedetails.imageURl
+     
+      this.props.postInfo({
+        title: getInfo.getTitle(rawContent),
+        body: htmlContent,
+        cardImage: cardImage,
+        shortDesc: getInfo.getShortDesc(rawContent),
+        editorpick: this.state.editorpick,
+        imageName: this.props.data.imagedetails.filename,
+      });
+      window.history.pushState(null, null, "/kurangu");
   };
+
   _handleKeyCommand(command) {
     const { editorState } = this.state;
     const newState = RichUtils.handleKeyCommand(editorState, command);
@@ -123,56 +141,16 @@ class MyEditor extends React.Component {
       RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle)
     );
   }
-  handleImageChange = (event) => {
-    const image = event.target.files[0];
-    if (image) {
-      const formData = new FormData();
-      this.setState({ filename: image.name });
-      formData.append("image", image, image.name);
-      this.props.uploadImage(formData);
-    }
-  };
-  handleEditPicture = () => {
-    const fileInput = document.getElementById("imageInput");
-    fileInput.click();
-  };
+ 
 
-  /* componentDidMount(){
-
-    const plainText = 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.';
-    const content = ContentState.createFromText(plainText);
-
-    //this.state = { editorState: EditorState.createWithContent(content)};
-    console.log(this.props.data.information);
-    this.setState({ editorState: EditorState.createWithContent(content)} );
-
-  }
- */
-  render() {
+ render() {
     const { classes } = this.props;
     const { editorState, name, mode = "create" } = this.state;
     //const { filename } = this.props.data;
-    const { imageURl,filename } = this.props.data.imagedetails;
-
-    console.log("----------------------");
+    //const { imageURl } = this.props.data.imagedetails;
+    //console.log(this.props.data.mode);
     
 
-
-    const {
-      information: {
-        informationId,
-        title,
-        body,
-        createdAt,
-        cardImage,
-        shortDesc
-      }
-    } = this.props.data;
-    //console.log(body);
-
-  
-  
-    
     let className = "RichEditor-editor";
     var contentState = editorState.getCurrentContent();
     if (!contentState.hasText()) {
@@ -183,6 +161,9 @@ class MyEditor extends React.Component {
     //console.log(cardImage);
 
     return (
+      <Fragment>
+      <Typography variant="h6">Post your content</Typography>
+
       <div className="RichEditor-root">
         <InlineStyleControls
           editorState={editorState}
@@ -206,26 +187,11 @@ class MyEditor extends React.Component {
           />
         </div>
 
-        {this.props.imageloading && (
-          <ImgCard image={imageURl} filename={name} loading={this.props.imageloading} />
-        )}
+        </div>
 
         <div className={classes.submit}>
-          <input
-            type="file"
-            name="file"
-            id="imageInput"
-            hidden="hidden"
-            onChange={this.handleImageChange}
-          />
-
-          <MyButton
-            tip="Upload Image"
-            onClick={this.handleEditPicture}
-            btnClassName="button"
-          >
-            <EditIcon color="primary" />
-          </MyButton>
+          <UploadImage mode={this.props.mode} />
+          
           <Button
             type="submit"
             variant="contained"
@@ -248,7 +214,7 @@ class MyEditor extends React.Component {
             Clear
           </Button>
         </div>
-      </div>
+        </Fragment>
     );
   }
 }
@@ -273,6 +239,7 @@ function getBlockStyle(block) {
 }
 
 MyEditor.propTypes = {
+  postInfo: PropTypes.func.isRequired,
   uploadImage: PropTypes.func.isRequired,
 };
 
@@ -280,9 +247,8 @@ const mapStateToProps = (state) => ({
   UI: state.UI,
   data: state.data,
 });
-
 const mapsActionsToProps = {
-  uploadImage,
+  postInfo,
 };
 export default connect(
   mapStateToProps,

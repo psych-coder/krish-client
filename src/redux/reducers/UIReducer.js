@@ -3,16 +3,18 @@ import {
   LOADING_UI,
   CLEAR_ERRORS,
   STOP_LOADING_UI,
-  IMAGE_LOADING,
   STOP_IMAGE_LOADING
 } from "../types";
 
 const intialState = {
   loading: false,
   errors: null,
+  mode: "create",
+  imageloading:false
 };
 
 export default function (state = intialState, action) {
+  //debugger;
   switch (action.type) {
     case SET_ERRORS:
       return {
@@ -34,16 +36,10 @@ export default function (state = intialState, action) {
         //open: true,
         errors: action.payload,
       };
-    case IMAGE_LOADING:
-      return {
-        ...state,
-        imageloading: true,
-        //open: true,
-        errors: action.payload,
-      };
+   
     case STOP_LOADING_UI:
       return {
-        ...state,
+        //...state,
         loading: false,
         // open: false,
       };
@@ -54,6 +50,7 @@ export default function (state = intialState, action) {
         //loading: false,
         // open: false,
       };
+     
     default:
       return state;
   }

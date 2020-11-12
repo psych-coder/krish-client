@@ -13,6 +13,7 @@ import {
   SET_TAGS,
   DELETE_INFO,
   SET_POST,
+  IMAGE_LOADING,
 } from "../types";
 
 const initialState = {
@@ -24,7 +25,7 @@ const initialState = {
   newsFeed: [],
   cardImage: "",
   tags: [],
-  imagedetails: {},
+  imagedetails: {imageURl:""},
 };
 
 export default function (state = initialState, action) {
@@ -117,7 +118,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
       };
-
+      case IMAGE_LOADING:
+        //debugger;
+        console.log(action.payload);
+        return {
+          ...state,
+          imageloading: true,
+          mode : action.payload
+          //open: true,
+          //errors: action.payload,
+        };
     default:
       return state;
   }

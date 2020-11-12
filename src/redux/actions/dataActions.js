@@ -20,6 +20,7 @@ import {
   DELETE_INFO,
   SET_POST,
 } from "../types";
+
 import axios from "axios";
 
 //Get All Screams
@@ -247,15 +248,19 @@ export const updateInfo = (id) => (dispatch) =>{
     })
   })
 }
-export const uploadImage = (formData) => (dispatch) => {
-  dispatch({type : IMAGE_LOADING});
+export const uploadImage = (formData,mode) => (dispatch) => {
+  //debugger;
+  dispatch({
+    type : IMAGE_LOADING,
+    payload:mode
+  });
   axios.post('/information/image',formData)
   .then(res => {
-    //console.log(res.data);
-     dispatch({
+    console.log(res.data);
+    dispatch({
       type : SET_IMAGE,
       payload : res.data
-    });
+    }); 
     //dispatch({type: STOP_IMAGE_LOADING});
   })
   .catch(err => console.log(err))
