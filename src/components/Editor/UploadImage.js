@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 import MyButton from "../../util/MyButton";
-import ImgCard from "./imgcard";
 import EditIcon from "@material-ui/icons/Edit";
 
 import { uploadImage } from "../../redux/actions/dataActions";
@@ -48,13 +47,7 @@ class UploadImage extends React.Component {
 
     return (
       <Fragment>
-        {this.props.UI.imageloading && (
-          <ImgCard
-            image={imageURl}
-            filename=""
-            loading={this.props.imageloading}
-          />
-        )}
+     
        
         <input
           type="file"

@@ -3,6 +3,7 @@ import {
   LOADING_UI,
   CLEAR_ERRORS,
   STOP_LOADING_UI,
+  IMAGE_LOADING,
   STOP_IMAGE_LOADING
 } from "../types";
 
@@ -43,6 +44,16 @@ export default function (state = intialState, action) {
         loading: false,
         // open: false,
       };
+      case IMAGE_LOADING:
+        //debugger;
+        console.log(action.payload);
+        return {
+          ...state,
+          imageloading: true,
+          mode : action.payload
+          //open: true,
+          //errors: action.payload,
+        };
     case STOP_IMAGE_LOADING:
       return {
         ...state,

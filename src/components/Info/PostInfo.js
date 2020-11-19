@@ -117,11 +117,12 @@ class PostInfo extends Component {
 
     const {
       classes,
-      data: { imageloading, loading },
+     
     } = this.props;
 
    
-    let mode =  this.props.infoId ? "update" :"create";
+
+    let link =  this.props.infoId ? `/Editor/${this.props.infoId}` : "/Editor";
     let createEdit = this.props.infoId ? (
       <EditOutlinedIcon color="primary" />
      
@@ -131,8 +132,8 @@ class PostInfo extends Component {
 
     return (
       <Fragment>
-      <Link to="/Editor">
-        <MyButton onClick={this.handleOpen} tip="Post a news">
+      <Link to={link}>
+        <MyButton tip="Post a news">
           {createEdit}
         </MyButton>
         </Link>

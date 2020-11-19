@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Editor, EditorState, RichUtils, ContentState } from "draft-js";
 import { stateFromHTML } from "draft-js-import-html";
+import axios from "axios";
 
 import PropTypes from "prop-types";
 
@@ -18,7 +19,8 @@ import getInfo from "../../util/getInfo";
 import { connect } from "react-redux";
 
 import UploadImage from "./UploadImage";
-import {postInfo,} from "../../redux/actions/dataActions";
+import {postInfo,getPost} from "../../redux/actions/dataActions";
+import ImgCard from "./imgcard";
 
 const styles = (theme) => ({
   ...theme.spreadThis,
@@ -61,8 +63,9 @@ class MyEditor extends React.Component {
     super(props);
     
     console.log(this.state);
+    this.state = { editorState: EditorState.createEmpty(), editorpick: false, mode:"create"};
 
-    if (!this.props.information || this.props.UI.mode === "create") {
+    /* if (!this.props.information || this.props.UI.mode === "create") {
       this.state = { editorState: EditorState.createEmpty(), editorpick: false, };
     } else {
       //this.state = { mode: "update" };
@@ -72,7 +75,7 @@ class MyEditor extends React.Component {
       this.state = {
         editorState: EditorState.createWithContent(contentState),
       };
-    }
+    } */
 
     this.focus = () => this.refs.editor.focus();
     this.onChange = (editorState) => {
@@ -98,7 +101,7 @@ class MyEditor extends React.Component {
     //console.log(this.state.editorState);
     //this.props.handleSubmit(event, this.state.editorState);
 
-    event.preventDefault();
+    //event.preventDefault();
      
       let rawContent = convertToRaw(this.state.editorState.getCurrentContent());
       let htmlContent = convertToHTML(this.state.editorState.getCurrentContent());
@@ -114,7 +117,9 @@ class MyEditor extends React.Component {
         editorpick: this.state.editorpick,
         imageName: this.props.data.imagedetails.filename,
       });
-      window.history.pushState(null, null, "/kurangu");
+      //window.history.pushState(null, null, "/");
+      this.props.history.push("/"); 
+
   };
 
   _handleKeyCommand(command) {
@@ -142,6 +147,29 @@ class MyEditor extends React.Component {
     );
   }
  
+  componentDidMount() {
+    const infoid = this.props.match.params.infoid;
+
+    //if(screamId) this.setState({screamIdParam: screamId});
+    /* this.props.getPost(infoid);
+    const contentState = stateFromHTML(this.props.information);
+
+    this.setState( {
+        mode: "update",
+      }) */
+   axios
+      .get(`/information/${infoid}`)
+      .then((res) => {
+        const contentState = stateFromHTML(res.data.body);
+        
+
+        this.setState({ editorState: EditorState.createWithContent(contentState)})
+        
+        
+      })
+      .catch(err => console.log(err)); 
+      
+  }
 
  render() {
     const { classes } = this.props;
@@ -191,6 +219,14 @@ class MyEditor extends React.Component {
 
         <div className={classes.submit}>
           <UploadImage mode={this.props.mode} />
+
+          {this.props.UI.imageloading && (
+          <ImgCard
+            image={this.props.data.imagedetails.imageURl}
+            filename=""
+            loading={this.props.imageloading}
+          />
+        )}
           
           <Button
             type="submit"
@@ -249,6 +285,7 @@ const mapStateToProps = (state) => ({
 });
 const mapsActionsToProps = {
   postInfo,
+  getPost
 };
 export default connect(
   mapStateToProps,

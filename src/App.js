@@ -32,7 +32,7 @@ import imgcard from "./components/test/imgcard";
 const theme = createMuiTheme(themeFile);
 
 axios.defaults.baseURL = "https://asia-east2-manithakurangu-338c3.cloudfunctions.net/api"
-//axios.defaults.baseURL = "http://localhost:5000/manithakurangu-338c3/asia-east2/api"
+//axios.defaults.baseURL = "http://localhost:5001/manithakurangu-338c3/asia-east2/api"
 
 const token = localStorage.FBIdToken;
 //console.log(token);
@@ -63,6 +63,7 @@ class App extends Component {
               <Route exact path="/" component={home} />
                 <Route exact path="/info/:tagname" component={home} />
                 <Route exact path="/Editor" component={MyEditor} />
+                <Route exact path="/Editor/:infoid" component={MyEditor} />
                 <Route exact path="/test" component={RichEditorExample} />
                 <Route exact path="/divtest" component={imgcard} />
                 <Route exact path="/parent" component={Parent} />
