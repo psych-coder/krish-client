@@ -229,16 +229,16 @@ export const postInfo = (newInfo) => (dispatch) =>{
   })
 }
 
-export const updateInfo = (id) => (dispatch) =>{
+export const updateInfo = (id,newInfo) => (dispatch) =>{
   //debugger;
   dispatch({type : LOADING_UI});
-  axios.put(`/information/${id}`)
+  axios.put(`/information/${id}`,newInfo)
   .then(res =>{
     dispatch({
       type : POST_INFO,
       payload : res.data
     });
-    dispatch({type: STOP_IMAGE_LOADING});
+    //dispatch({type: STOP_IMAGE_LOADING});
     dispatch(clearErrors())    
   })
   .catch(err => {

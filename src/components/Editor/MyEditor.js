@@ -19,7 +19,7 @@ import getInfo from "../../util/getInfo";
 import { connect } from "react-redux";
 
 import UploadImage from "./UploadImage";
-import {postInfo,getPost} from "../../redux/actions/dataActions";
+import { postInfo, getPost, updateInfo } from "../../redux/actions/dataActions";
 import ImgCard from "./imgcard";
 
 const styles = (theme) => ({
@@ -58,12 +58,18 @@ const styles = (theme) => ({
   },
 });
 class MyEditor extends React.Component {
-
   constructor(props) {
     super(props);
-    
+
     console.log(this.state);
-    this.state = { editorState: EditorState.createEmpty(), editorpick: false, mode:"create"};
+    this.state = {
+      editorState: EditorState.createEmpty(),
+      editorpick: false,
+      mode: "create",
+      infoid : "",
+      imageloading:false,
+      imageURl:""
+    };
 
     /* if (!this.props.information || this.props.UI.mode === "create") {
       this.state = { editorState: EditorState.createEmpty(), editorpick: false, };
@@ -102,24 +108,32 @@ class MyEditor extends React.Component {
     //this.props.handleSubmit(event, this.state.editorState);
 
     //event.preventDefault();
-     
-      let rawContent = convertToRaw(this.state.editorState.getCurrentContent());
-      let htmlContent = convertToHTML(this.state.editorState.getCurrentContent());
-  
-      console.log(this.props)
-      let cardImage = !this.props.data.imagedetails ?  "" : this.props.data.imagedetails.imageURl
-     
-      this.props.postInfo({
-        title: getInfo.getTitle(rawContent),
-        body: htmlContent,
-        cardImage: cardImage,
-        shortDesc: getInfo.getShortDesc(rawContent),
-        editorpick: this.state.editorpick,
-        imageName: this.props.data.imagedetails.filename,
-      });
-      //window.history.pushState(null, null, "/");
-      this.props.history.push("/"); 
 
+    let rawContent = convertToRaw(this.state.editorState.getCurrentContent());
+    let htmlContent = convertToHTML(this.state.editorState.getCurrentContent());
+
+
+    let cardImage = !this.props.data.imagedetails
+      ? ""
+      : this.props.data.imagedetails.imageURl;
+
+    let information = {
+      title: getInfo.getTitle(rawContent),
+      body: htmlContent,
+      //cardImage: cardImage,
+      shortDesc: getInfo.getShortDesc(rawContent),
+      editorpick: this.state.editorpick,
+      imageName: this.props.data.imagedetails.filename,
+    };
+    
+    if(this.state.mode ==="update"){
+      this.props.updateInfo(this.state.infoid,information);
+    }
+    else{
+      this.props.postInfo(information);
+    }
+    //window.history.pushState(null, null, "/");
+    this.props.history.push("/");
   };
 
   _handleKeyCommand(command) {
@@ -146,7 +160,7 @@ class MyEditor extends React.Component {
       RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle)
     );
   }
- 
+
   componentDidMount() {
     const infoid = this.props.match.params.infoid;
 
@@ -157,27 +171,32 @@ class MyEditor extends React.Component {
     this.setState( {
         mode: "update",
       }) */
-   axios
+    axios
       .get(`/information/${infoid}`)
       .then((res) => {
         const contentState = stateFromHTML(res.data.body);
-        
 
-        this.setState({ editorState: EditorState.createWithContent(contentState)})
-        
-        
+        this.setState({
+          editorState: EditorState.createWithContent(contentState),
+          mode:"update",
+          infoid: infoid,
+          
+        });
+
+        if(res.data.cardImage){
+          this.setState({imageURl : res.data.cardImage,
+          imageloading:true});
+        }
       })
-      .catch(err => console.log(err)); 
-      
+      .catch((err) => console.log(err));
   }
 
- render() {
+  render() {
     const { classes } = this.props;
     const { editorState, name, mode = "create" } = this.state;
     //const { filename } = this.props.data;
     //const { imageURl } = this.props.data.imagedetails;
     //console.log(this.props.data.mode);
-    
 
     let className = "RichEditor-editor";
     var contentState = editorState.getCurrentContent();
@@ -187,47 +206,46 @@ class MyEditor extends React.Component {
       }
     }
     //console.log(cardImage);
-
+    let imageURl = this.state.imageloading===true ? (this.state.imageURl) : (this.props.data.imagedetails.imageURl)
     return (
       <Fragment>
-      <Typography variant="h6">Post your content</Typography>
+        <Typography variant="h6">Post your content</Typography>
 
-      <div className="RichEditor-root">
-        <InlineStyleControls
-          editorState={editorState}
-          onToggle={this.toggleInlineStyle}
-        />
-        <BlockStyleControls
-          editorState={editorState}
-          onToggle={this.toggleBlockType}
-        />
-        <div className={className} onClick={this.focus}>
-          <Editor
-            blockStyleFn={getBlockStyle}
-            customStyleMap={styleMap}
+        <div className="RichEditor-root">
+          <InlineStyleControls
             editorState={editorState}
-            handleKeyCommand={this.handleKeyCommand}
-            onChange={this.onChange}
-            onTab={this.onTab}
-            placeholder="Post a content..."
-            ref="editor"
-            spellCheck={true}
+            onToggle={this.toggleInlineStyle}
           />
-        </div>
-
+          <BlockStyleControls
+            editorState={editorState}
+            onToggle={this.toggleBlockType}
+          />
+          <div className={className} onClick={this.focus}>
+            <Editor
+              blockStyleFn={getBlockStyle}
+              customStyleMap={styleMap}
+              editorState={editorState}
+              handleKeyCommand={this.handleKeyCommand}
+              onChange={this.onChange}
+              onTab={this.onTab}
+              placeholder="Post a content..."
+              ref="editor"
+              spellCheck={true}
+            />
+          </div>
         </div>
 
         <div className={classes.submit}>
           <UploadImage mode={this.props.mode} />
 
-          {this.props.UI.imageloading && (
-          <ImgCard
-            image={this.props.data.imagedetails.imageURl}
-            filename=""
-            loading={this.props.imageloading}
-          />
-        )}
-          
+          {(this.props.UI.imageloading || this.state.imageloading) && (
+            <ImgCard
+              image={imageURl}
+              filename=""
+              loading={this.props.imageloading}
+            />
+          )}
+
           <Button
             type="submit"
             variant="contained"
@@ -250,7 +268,7 @@ class MyEditor extends React.Component {
             Clear
           </Button>
         </div>
-        </Fragment>
+      </Fragment>
     );
   }
 }
@@ -285,7 +303,8 @@ const mapStateToProps = (state) => ({
 });
 const mapsActionsToProps = {
   postInfo,
-  getPost
+  getPost,
+  updateInfo,
 };
 export default connect(
   mapStateToProps,
