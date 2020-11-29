@@ -46,7 +46,7 @@ export default function (state = intialState, action) {
       };
       case IMAGE_LOADING:
         //debugger;
-        console.log(action.payload);
+        //console.log(action.payload);
         return {
           ...state,
           imageloading: true,

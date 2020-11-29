@@ -113,14 +113,12 @@ class MyEditor extends React.Component {
     let htmlContent = convertToHTML(this.state.editorState.getCurrentContent());
 
 
-    let cardImage = !this.props.data.imagedetails
-      ? ""
-      : this.props.data.imagedetails.imageURl;
+    let cardImage = (!this.props.data.imagedetails || this.props.data.imagedetails.imageURl ==="") ? (this.state.imageURl) : (this.props.data.imagedetails.imageURl)
 
     let information = {
       title: getInfo.getTitle(rawContent),
       body: htmlContent,
-      //cardImage: cardImage,
+      cardImage: cardImage,
       shortDesc: getInfo.getShortDesc(rawContent),
       editorpick: this.state.editorpick,
       imageName: this.props.data.imagedetails.filename,
@@ -191,6 +189,7 @@ class MyEditor extends React.Component {
       .catch((err) => console.log(err));
   }
 
+
   render() {
     const { classes } = this.props;
     const { editorState, name, mode = "create" } = this.state;
@@ -206,7 +205,7 @@ class MyEditor extends React.Component {
       }
     }
     //console.log(cardImage);
-    let imageURl = this.state.imageloading===true ? (this.state.imageURl) : (this.props.data.imagedetails.imageURl)
+    let imageURl = this.props.UI.imageloading===true ? (this.props.data.imagedetails.imageURl) : (this.state.imageURl)
     return (
       <Fragment>
         <Typography variant="h6">Post your content</Typography>
@@ -242,7 +241,7 @@ class MyEditor extends React.Component {
             <ImgCard
               image={imageURl}
               filename=""
-              loading={this.props.imageloading}
+             
             />
           )}
 

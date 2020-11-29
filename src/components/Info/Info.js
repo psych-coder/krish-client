@@ -5,6 +5,8 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
+import CardActionArea from '@material-ui/core/CardActionArea';
+
 import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
@@ -12,6 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import { blue } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
+import {Link} from 'react-router-dom';
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
@@ -22,6 +25,12 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import ActionMenu from "../Menu/ActionMenu";
+
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import CloseIcon from "@material-ui/icons/Close";
+import MyButton from "../../util/MyButton";
+
 
 const styles = theme => ({
   root: {
@@ -60,13 +69,23 @@ class Info extends Component {
     super();
     this.state = {
       expanded: false,
-      setExpanded: ""
+      setExpanded: "",
+      open:false
     };
   }
 
   handleExpandClick = () => {
     this.setState({ expanded: !this.state.expanded });
   };
+
+  handleMediaClick = () => {
+    this.setState({ open: true });
+  };
+  
+  handleClose = (dispatch) => {
+    this.setState({ open: false });
+  };
+
   render() {
     dayjs.extend(relativeTime);
     const { classes } = this.props;
@@ -85,13 +104,16 @@ class Info extends Component {
 
     const trimedBody = shortDesc.length > 100 ? shortDesc.substring(0, 100) + "..." : body;
     const imageAvaliable = cardImage !== undefined && cardImage.trim() !== "" ? (
-
+       
+      <CardActionArea  onClick={this.handleMediaClick}>
        <CardMedia
        component="img"
        height="300"
           className={classes.media}
           image={cardImage}
         />
+        </CardActionArea>
+        
       ) : null;
 
       const renderHTML = require('react-render-html');
@@ -113,6 +135,28 @@ class Info extends Component {
         />
        
         {imageAvaliable}
+
+        <Dialog open={this.state.open} onClose={this.handleClose} fullWidth>
+          <DialogTitle onClose={this.handleClose}>
+            <Typography variant="h6">Image</Typography>
+            {this.onClose ? (
+              <IconButton aria-label="close" onClick={this.onClose}>
+                <CloseIcon />
+              </IconButton>
+            ) : null}
+          </DialogTitle>
+          <CardMedia
+       component="img"
+       height="300"
+          className={classes.media}
+          image={cardImage}
+        />
+          <MyButton tip="Close" onClick={this.handleClose}>
+            <CloseIcon />
+          </MyButton>
+        </Dialog>
+
+
         <Collapse in={!this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent in={this.state.expanded.toString()}>
             <Typography paragraph color="textPrimary" component="p">

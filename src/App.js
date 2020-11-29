@@ -28,6 +28,7 @@ import TestC from "./components/test/TestC";
 import RichEditorExample from "./components/RichEditor/RichEditor";
 import Parent from "./components/test/parent";
 import imgcard from "./components/test/imgcard";
+import MediaPreview from "./components/Info/MediaPreview";
 
 const theme = createMuiTheme(themeFile);
 
@@ -63,10 +64,11 @@ class App extends Component {
               <Route exact path="/" component={home} />
                 <Route exact path="/info/:tagname" component={home} />
                 <Route exact path="/Editor" component={MyEditor} />
-                <Route exact path="/Editor/:infoid" component={MyEditor} />
+                
                 <Route exact path="/test" component={RichEditorExample} />
                 <Route exact path="/divtest" component={imgcard} />
                 <Route exact path="/parent" component={Parent} />
+                <Route exact path="/Media" component={MediaPreview} />
                 <AuthRoute
                   exact
                   path="/login"
@@ -83,6 +85,7 @@ class App extends Component {
                   path="/kurangu"
                   component={home}
                 />
+                <AuthRoute exact path="/Editor/:infoid" component={MyEditor} />
 
               </Switch>
               </div>

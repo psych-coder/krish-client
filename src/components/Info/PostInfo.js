@@ -27,8 +27,6 @@ import Typography from "@material-ui/core/Typography";
 //Mui Imports
 import withStyles from "@material-ui/core/styles/withStyles";
 import AddIcon from "@material-ui/icons/Add";
-import CloseIcon from "@material-ui/icons/Close";
-import IconButton from "@material-ui/core/IconButton";
 
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 
