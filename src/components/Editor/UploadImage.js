@@ -10,7 +10,7 @@ import { uploadImage } from "../../redux/actions/dataActions";
 import { connect } from "react-redux";
 import store from "../../redux/store";
 
-
+import imageCompression from 'browser-image-compression';
 
 const styles = (theme) => ({
   ...theme.spreadThis,
@@ -28,18 +28,49 @@ const styles = (theme) => ({
 });
 
 class UploadImage extends React.Component {
+
+  constructor(props){
+    super(props)
+    this.handleImageChange = this.handleImageChange.bind(this);
+  }
+
+ 
   handleImageChange = (event) => {
     //debugger;
+    
     const image = event.target.files[0];
+    console.log('originalFile instanceof Blob', image instanceof Blob); // true
+    console.log(`originalFile size ${image.size / 1024 / 1024} MB`);
+    this.setState({ filename: image.name });
+    var options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 480,
+      useWebWorker: true
+    }
+    imageCompression(image, options)
+      .then(function (compressedFile) {
+        console.log('compressedFile instanceof Blob', compressedFile instanceof Blob); // true
+        console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`); // smaller than maxSizeMB
+
+        const formData = new FormData();
+               
+                formData.append("image", image, image.name);
+               store.dispatch(uploadImage(formData));
+   
+       // return uploadToServer(compressedFile); // write your own logic
+      })
+      .catch(function (error) {
+        console.log(error.message);
+      });
+    
+    /* const formData = new FormData();
+                this.setState({ filename: image.name });
+                formData.append("image", image, image.name);
+               //store.dispatch(uploadImage(formData, this.props.mode)); */
+  }
+  
    
   
-     if (image) {
-      const formData = new FormData();
-      this.setState({ filename: image.name });
-      formData.append("image", image, image.name);
-      store.dispatch(uploadImage(formData, this.props.mode));
-    } 
-  };
   handleEditPicture = () => {
     const fileInput = document.getElementById("imageInput");
     fileInput.click();

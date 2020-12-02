@@ -22,289 +22,276 @@ import {
 } from "../types";
 
 import axios from "axios";
-import Resizer from 'react-image-file-resizer';
+
 
 //Get All Screams
-export const getScreams = () => dispatch => {
- 
+export const getScreams = () => (dispatch) => {
   dispatch({ type: LOADING_DATA });
   axios
     .get("/screams")
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: SET_SCREAMS,
-        payload: res.data
+        payload: res.data,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch({
         type: SET_SCREAMS,
-        payload: []
+        payload: [],
       });
     });
 };
-
 
 //get a Scream
 
-export const getScream = (screamId) => dispatch =>{
-  dispatch({type:LOADING_UI})
-  axios.get(`/scream/${screamId}`)
-  .then(res => {
-    dispatch({
-      type : SET_SCREAM,
-      payload: res.data
+export const getScream = (screamId) => (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  axios
+    .get(`/scream/${screamId}`)
+    .then((res) => {
+      dispatch({
+        type: SET_SCREAM,
+        payload: res.data,
+      });
+      dispatch({ type: STOP_LOADING_UI });
     })
-    dispatch({type: STOP_LOADING_UI});
-  })
-  .catch(err => console.log(err));
-}
+    .catch((err) => console.log(err));
+};
 //Like a Scream
-export const likeScream = screamId => dispatch => {
+export const likeScream = (screamId) => (dispatch) => {
   axios
     .get(`/scream/${screamId}/like`)
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: LIKE_SCREAM,
-        payload: res.data
+        payload: res.data,
       });
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 };
 //Unlike a scream
-export const unlikeScream = screamId => dispatch => {
-
+export const unlikeScream = (screamId) => (dispatch) => {
   axios
     .get(`/scream/${screamId}/unlike`)
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: UNLIKE_SCREAM,
-        payload: res.data
+        payload: res.data,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 };
-
 
 //submit a comment
 
-export const submitComment = (screamId, commentData) => dispatch =>{
+export const submitComment = (screamId, commentData) => (dispatch) => {
   axios
-    .post(`/scream/${screamId}/comment`,commentData)
-    .then(res => {
+    .post(`/scream/${screamId}/comment`, commentData)
+    .then((res) => {
       dispatch({
         type: SUBMIT_COMMENT,
-        payload: res.data
-      })
-      dispatch(clearErrors())
+        payload: res.data,
+      });
+      dispatch(clearErrors());
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       dispatch({
         type: SET_ERRORS,
-        payload : err.response.data
-      })
+        payload: err.response.data,
+      });
     });
-}
+};
 //Delete Scream
-export const deleteScream = screamId => dispatch => {
+export const deleteScream = (screamId) => (dispatch) => {
   axios
     .delete(`/scream/${screamId}`)
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: DELETE_SCREAM,
-        payload: screamId
+        payload: screamId,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 };
 
 export const getUserData = (userHandle) => (dispatch) => {
-  
-  dispatch({type : LOADING_DATA })
+  dispatch({ type: LOADING_DATA });
   axios
     .get(`/user/${userHandle}`)
     .then((res) => {
       dispatch({
         type: SET_INFORMATIONS,
-        payload: res.data.informations
+        payload: res.data.informations,
       });
     })
     .catch(() => {
       dispatch({
         type: SET_INFORMATIONS,
-        payload: null
+        payload: null,
       });
     });
-}
+};
 
-export const clearErrors = () => dispatch =>{
+export const clearErrors = () => (dispatch) => {
   dispatch({
-    type : CLEAR_ERRORS
-  })
-}
+    type: CLEAR_ERRORS,
+  });
+};
 
 //Get information
-export const getInformation = (tagName) => dispatch => {
-
-  let  path= "/informations"
-  if(tagName !==undefined && tagName !== "" && tagName !== "All"){
-    path = `/informations/tags/${tagName}`
+export const getInformation = (tagName) => (dispatch) => {
+  let path = "/informations";
+  if (tagName !== undefined && tagName !== "" && tagName !== "All") {
+    path = `/informations/tags/${tagName}`;
   }
   dispatch({ type: LOADING_DATA });
   axios
     .get(path)
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: SET_INFORMATIONS,
-        payload: res.data
+        payload: res.data,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch({
         type: SET_INFORMATIONS,
-        payload: []
+        payload: [],
       });
     });
 };
 
-
-export const getPost = (id) => dispatch => {
-
+export const getPost = (id) => (dispatch) => {
   //debugger;
   //let path = `/informations/${id}`
-  axios.get(`/information/${id}`)
-  .then(res => {
-    dispatch({
-      type : SET_POST,
-      payload: res.data
+  axios
+    .get(`/information/${id}`)
+    .then((res) => {
+      dispatch({
+        type: SET_POST,
+        payload: res.data,
+      });
+      // dispatch({type: STOP_LOADING_UI});
     })
-   // dispatch({type: STOP_LOADING_UI});
-  })
-  .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 };
-
-
 
 //Post a scream
 
-export const postScream = (newScream) => (dispatch) =>{
-  dispatch({type : LOADING_UI});
-  axios.post("/scream", newScream)
-  .then(res =>{
-    dispatch({
-      type : POST_SCREAM,
-      payload : res.data
-    });
-    dispatch(clearErrors())
-  })
-  .catch(err => {
-    dispatch({
-      type: SET_ERRORS,
-      payload : err.response.data
+export const postScream = (newScream) => (dispatch) => {
+  dispatch({ type: LOADING_UI });
+  axios
+    .post("/scream", newScream)
+    .then((res) => {
+      dispatch({
+        type: POST_SCREAM,
+        payload: res.data,
+      });
+      dispatch(clearErrors());
     })
-  })
-}
-
-export const postInfo = (newInfo) => (dispatch) =>{
-  //debugger;
-  dispatch({type : LOADING_UI});
-  axios.post("/information", newInfo)
-  .then(res =>{
-    dispatch({
-      type : POST_INFO,
-      payload : res.data
+    .catch((err) => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data,
+      });
     });
-    //dispatch({type: STOP_IMAGE_LOADING});
-    dispatch(clearErrors())    
-  })
-  .catch(err => {
-    dispatch({
-      type: SET_ERRORS,
-      payload : err.response.data
-    })
-  })
-}
+};
 
-export const updateInfo = (id,newInfo) => (dispatch) =>{
+export const postInfo = (newInfo) => (dispatch) => {
   //debugger;
-  dispatch({type : LOADING_UI});
-  axios.put(`/information/${id}`,newInfo)
-  .then(res =>{
-    dispatch({
-      type : POST_INFO,
-      payload : res.data
+  dispatch({ type: LOADING_UI });
+  axios
+    .post("/information", newInfo)
+    .then((res) => {
+      dispatch({
+        type: POST_INFO,
+        payload: res.data,
+      });
+      //dispatch({type: STOP_IMAGE_LOADING});
+      dispatch(clearErrors());
+    })
+    .catch((err) => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data,
+      });
     });
-    //dispatch({type: STOP_IMAGE_LOADING});
-    dispatch(clearErrors())    
-  })
-  .catch(err => {
-    dispatch({
-      type: SET_ERRORS,
-      payload : err.response
-    })
-  })
-}
-export const uploadImage = (formData,mode) => (dispatch) => {
+};
 
-  const resizeFile = (file) => new Promise(resolve => {
-    Resizer.imageFileResizer(file, 480, 480, 'JPEG', 100, 0,
-    uri => {
-      resolve(uri);
-    },
-    
-    );
-});
+export const updateInfo = (id, newInfo) => (dispatch) => {
   //debugger;
+  dispatch({ type: LOADING_UI });
+  axios
+    .put(`/information/${id}`, newInfo)
+    .then((res) => {
+      dispatch({
+        type: POST_INFO,
+        payload: res.data,
+      });
+      //dispatch({type: STOP_IMAGE_LOADING});
+      dispatch(clearErrors());
+    })
+    .catch((err) => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response,
+      });
+    });
+};
+export const uploadImage = (formData) => (dispatch) => {
+   //debugger;
   dispatch({
-    type : IMAGE_LOADING,
-    payload:mode
+    type: IMAGE_LOADING,
+    //payload: mode,
   });
-  axios.post('/information/image',formData)
-  .then(res => {
-    console.log(res.data);
-    dispatch({
-      type : SET_IMAGE,
-      payload : res.data
-    }); 
-    //dispatch({type: STOP_IMAGE_LOADING});
-  })
-  .catch(err => console.log(err))
-}
+  axios
+    .post("/information/image", formData)
+    .then((res) => {
+      console.log(res.data);
+      dispatch({
+        type: SET_IMAGE,
+        payload: res.data,
+      });
+      //dispatch({type: STOP_IMAGE_LOADING});
+    })
+    .catch((err) => console.log(err)); 
+};
 
-export const getTags = () => dispatch => {
+export const getTags = () => (dispatch) => {
   dispatch({ type: LOADING_DATA });
   axios
     .get("/tags")
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: SET_TAGS,
-        payload: res.data
+        payload: res.data,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       dispatch({
         type: SET_TAGS,
-        payload: []
+        payload: [],
       });
     });
 };
 
 //Delete Scream
-export const deletePost = id => dispatch => {
+export const deletePost = (id) => (dispatch) => {
   axios
     .delete(`/information/${id}`)
-    .then(res => {
+    .then((res) => {
       dispatch({
         type: DELETE_INFO,
-        payload: id
+        payload: id,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 };
