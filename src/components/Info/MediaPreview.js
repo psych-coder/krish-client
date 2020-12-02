@@ -10,57 +10,63 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
 
 const styles = (theme) => ({
   ...theme.spreadThis,
-  imgRoot: {
-    maxWidth: 150,
+  root: {
+    width: "600px",
+    height:"600px",    
   },
-  imgMedia: {
-    height: 0,
-    margin: "auto",
-    //width:'500px',
-    //margin:"10%",
-    padding: "30%",
+
+  box: {
+    // height: '100%',
+    "width": "500px",
+    //"border": "5px solid black",
   },
-  closeButton: {
-    position: "absolute",
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500],
-  },
+  media:{
+    "max-width": "100%",
+    "max-height": "100%",
+  }
+ 
 });
 class MediaPreview extends Component {
   state = {
     open: false,
   };
 
-  constructor() {
-    super();
-    this.state = {
-      open: true,
-    };
+  componentDidMount() {
+    console.log(this.props);
   }
-
-  handleClose = (dispatch) => {
-    this.setState({ open: false });
-  };
-
   render() {
+    const { classes } = this.props;
+
     return (
       <Fragment>
-        <Dialog open={this.state.open} onClose={this.handleClose} fullWidth>
-          <DialogTitle onClose={this.handleClose}>
-            <Typography variant="h6">Image</Typography>
-            {this.onClose ? (
-              <IconButton aria-label="close" onClick={this.onClose}>
-                <CloseIcon />
-              </IconButton>
-            ) : null}
-          </DialogTitle>
-          <MyButton tip="Close" onClick={this.handleClose}>
-            <CloseIcon />
-          </MyButton>
+        <Dialog   open={this.props.open} onClose={this.handleClose} >
+        
+
+            {/* <CardMedia className={classes.media1}  component="img" image={this.props.cardImage} /> */}
+
+            <div className={classes.root} >
+              <img src={this.props.cardImage} alt="Cloudy Sky" />
+          </div>
+    
+
+            {/*   <DialogTitle onClose={this.props.handleClose}>
+              <Typography variant="h6">Image</Typography>
+              {this.onClose ? (
+                <IconButton aria-label="close" onClick={this.props.handleClose}>
+                  <CloseIcon />
+                </IconButton>
+              ) : null}
+            </DialogTitle>
+            <MyButton tip="Close" onClick={this.props.handleClose}>
+              <CloseIcon />
+            </MyButton> */}
+         
         </Dialog>
       </Fragment>
     );

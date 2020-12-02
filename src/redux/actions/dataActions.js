@@ -22,6 +22,7 @@ import {
 } from "../types";
 
 import axios from "axios";
+import Resizer from 'react-image-file-resizer';
 
 //Get All Screams
 export const getScreams = () => dispatch => {
@@ -249,6 +250,15 @@ export const updateInfo = (id,newInfo) => (dispatch) =>{
   })
 }
 export const uploadImage = (formData,mode) => (dispatch) => {
+
+  const resizeFile = (file) => new Promise(resolve => {
+    Resizer.imageFileResizer(file, 480, 480, 'JPEG', 100, 0,
+    uri => {
+      resolve(uri);
+    },
+    
+    );
+});
   //debugger;
   dispatch({
     type : IMAGE_LOADING,

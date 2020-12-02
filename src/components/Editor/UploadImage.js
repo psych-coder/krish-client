@@ -10,6 +10,8 @@ import { uploadImage } from "../../redux/actions/dataActions";
 import { connect } from "react-redux";
 import store from "../../redux/store";
 
+
+
 const styles = (theme) => ({
   ...theme.spreadThis,
   submit: {
@@ -29,12 +31,14 @@ class UploadImage extends React.Component {
   handleImageChange = (event) => {
     //debugger;
     const image = event.target.files[0];
-    if (image) {
+   
+  
+     if (image) {
       const formData = new FormData();
       this.setState({ filename: image.name });
       formData.append("image", image, image.name);
       store.dispatch(uploadImage(formData, this.props.mode));
-    }
+    } 
   };
   handleEditPicture = () => {
     const fileInput = document.getElementById("imageInput");

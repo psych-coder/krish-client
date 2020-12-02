@@ -189,6 +189,9 @@ class MyEditor extends React.Component {
       .catch((err) => console.log(err));
   }
 
+  componentWillUnmount(){
+    this.setState({imageURl:""})
+  }
 
   render() {
     const { classes } = this.props;

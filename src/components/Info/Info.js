@@ -5,7 +5,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActionArea from "@material-ui/core/CardActionArea";
 
 import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
@@ -14,7 +14,7 @@ import Typography from "@material-ui/core/Typography";
 import { blue } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
@@ -25,53 +25,48 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import ActionMenu from "../Menu/ActionMenu";
+import MediaPreview from "../Info/MediaPreview";
 
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import CloseIcon from "@material-ui/icons/Close";
-import MyButton from "../../util/MyButton";
-
-
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     //maxWidth: 700,
     margin: "auto",
-    "margin-bottom" : "30px",
-    "box-shadow":"none",
-    "border": "1px solid rgb(202, 202, 202);"
+    "margin-bottom": "30px",
+    "box-shadow": "none",
+    border: "1px solid rgb(202, 202, 202);",
   },
- 
+
   media: {
-   // height: '100%',
-    margin: "auto",
-    width:'100%',
-    //margin:"10%",
-    //padding: "30%"
+    width: "300px",
+    //"display": "block"
   },
+
   expand: {
     transform: "rotate(0deg)",
     marginLeft: "auto",
     transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest
-    })
+      duration: theme.transitions.duration.shortest,
+    }),
   },
   expandOpen: {
-    transform: "rotate(180deg)"
+    transform: "rotate(180deg)",
   },
   avatar: {
     //color: theme.palette.getContrastText(deepOrange[500]),
-    backgroundColor: blue[500]
-  }
+    backgroundColor: blue[500],
+  },
 });
 
 class Info extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       expanded: false,
       setExpanded: "",
-      open:false
+      open: false,
     };
+
+    this.handleClose = () => this._handleClose();
   }
 
   handleExpandClick = () => {
@@ -81,8 +76,8 @@ class Info extends Component {
   handleMediaClick = () => {
     this.setState({ open: true });
   };
-  
-  handleClose = (dispatch) => {
+
+  _handleClose = (dispatch) => {
     this.setState({ open: false });
   };
 
@@ -98,28 +93,22 @@ class Info extends Component {
         body,
         createdAt,
         cardImage,
-        shortDesc
-      }
+        shortDesc,
+      },
     } = this.props;
 
-    const trimedBody = shortDesc.length > 100 ? shortDesc.substring(0, 100) + "..." : body;
-    const imageAvaliable = cardImage !== undefined && cardImage.trim() !== "" ? (
-       
-      <CardActionArea  onClick={this.handleMediaClick}>
-       <CardMedia
-       component="img"
-       height="300"
-          className={classes.media}
-          image={cardImage}
-        />
+    const trimedBody =
+      shortDesc.length > 100 ? shortDesc.substring(0, 100) + "..." : body;
+    const imageAvaliable =
+      cardImage !== undefined && cardImage.trim() !== "" ? (
+        <CardActionArea onClick={this.handleMediaClick}>
+          <CardMedia component="img" height="300" image={cardImage} />
         </CardActionArea>
-        
       ) : null;
 
-      const renderHTML = require('react-render-html');
+    const renderHTML = require("react-render-html");
 
     return (
-      
       <Card className={classes.root} variant="outlined">
         <CardHeader
           avatar={
@@ -128,40 +117,28 @@ class Info extends Component {
             </Avatar>
           }
           action={
-            <ActionMenu showMenu={authenticated} informationId={informationId} information={this.props.information} />
+            <ActionMenu
+              showMenu={authenticated}
+              informationId={informationId}
+              information={this.props.information}
+            />
           }
           title={title}
           subheader={dayjs(createdAt).fromNow()}
         />
-       
+
         {imageAvaliable}
 
-        <Dialog open={this.state.open} onClose={this.handleClose} fullWidth>
-          <DialogTitle onClose={this.handleClose}>
-            <Typography variant="h6">Image</Typography>
-            {this.onClose ? (
-              <IconButton aria-label="close" onClick={this.onClose}>
-                <CloseIcon />
-              </IconButton>
-            ) : null}
-          </DialogTitle>
-          <CardMedia
-       component="img"
-       height="300"
-          className={classes.media}
-          image={cardImage}
+        <MediaPreview
+          cardImage={cardImage}
+          open={this.state.open}
+          handleClose={this.handleClose}
         />
-          <MyButton tip="Close" onClick={this.handleClose}>
-            <CloseIcon />
-          </MyButton>
-        </Dialog>
-
 
         <Collapse in={!this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent in={this.state.expanded.toString()}>
             <Typography paragraph color="textPrimary" component="p">
-           { renderHTML( trimedBody)}
-              
+              {renderHTML(trimedBody)}
             </Typography>
           </CardContent>
         </Collapse>
@@ -171,7 +148,7 @@ class Info extends Component {
             <Typography paragraph>{body}</Typography>
           </CardContent>
         </Collapse>
-        
+
         <CardActions disableSpacing>
           <IconButton aria-label="add to favorites">
             <FavoriteIcon />
@@ -179,17 +156,16 @@ class Info extends Component {
           <IconButton aria-label="share">
             <ShareIcon />
           </IconButton>
-          {shortDesc.length > 300 && (<IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: this.state.expanded
-            })}
-            onClick={this.handleExpandClick}
-            aria-expanded={this.state.expanded}
-            aria-label="show more"
-          >
-            
-          </IconButton>) }
-          
+          {shortDesc.length > 300 && (
+            <IconButton
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: this.state.expanded,
+              })}
+              onClick={this.handleExpandClick}
+              aria-expanded={this.state.expanded}
+              aria-label="show more"
+            ></IconButton>
+          )}
         </CardActions>
       </Card>
     );
@@ -199,11 +175,11 @@ class Info extends Component {
 Info.propTypes = {
   information: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  user: state.user
+const mapStateToProps = (state) => ({
+  user: state.user,
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(Info));

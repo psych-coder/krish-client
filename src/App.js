@@ -69,6 +69,7 @@ class App extends Component {
                 <Route exact path="/divtest" component={imgcard} />
                 <Route exact path="/parent" component={Parent} />
                 <Route exact path="/Media" component={MediaPreview} />
+                <Route exact path="/Editor/:infoid" component={MyEditor} />
                 <AuthRoute
                   exact
                   path="/login"
@@ -85,7 +86,7 @@ class App extends Component {
                   path="/kurangu"
                   component={home}
                 />
-                <AuthRoute exact path="/Editor/:infoid" component={MyEditor} />
+               
 
               </Switch>
               </div>
