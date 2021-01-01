@@ -40,33 +40,41 @@ class MediaPreview extends Component {
   componentDidMount() {
     console.log(this.props);
   }
+
+  handleMediaClick = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = (dispatch) => {
+    this.setState({ open: false });
+  };
+
   render() {
     const { classes } = this.props;
 
     return (
       <Fragment>
         <Dialog   open={this.props.open} onClose={this.handleClose} >
-        
+      
 
-            {/* <CardMedia className={classes.media1}  component="img" image={this.props.cardImage} /> */}
-
+           
+{/* 
             <div className={classes.root} >
               <img src={this.props.cardImage} alt="Cloudy Sky" />
           </div>
-    
+     */}
 
-            {/*   <DialogTitle onClose={this.props.handleClose}>
+             <DialogTitle onClose={this.props.handleClose}>
               <Typography variant="h6">Image</Typography>
-              {this.onClose ? (
+           
                 <IconButton aria-label="close" onClick={this.props.handleClose}>
                   <CloseIcon />
                 </IconButton>
-              ) : null}
+           
             </DialogTitle>
-            <MyButton tip="Close" onClick={this.props.handleClose}>
-              <CloseIcon />
-            </MyButton> */}
-         
+           
+           
+            <CardMedia className={classes.media1}  component="img" image={this.props.cardImage} />
         </Dialog>
       </Fragment>
     );

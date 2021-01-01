@@ -54,7 +54,7 @@ class UploadImage extends React.Component {
 
         const formData = new FormData();
                
-                formData.append("image", image, image.name);
+                formData.append("image", compressedFile, image.name);
                store.dispatch(uploadImage(formData));
    
        // return uploadToServer(compressedFile); // write your own logic
