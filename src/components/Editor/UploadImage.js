@@ -44,7 +44,7 @@ class UploadImage extends React.Component {
     this.setState({ filename: image.name });
     var options = {
       maxSizeMB: 1,
-      maxWidthOrHeight: 480,
+      maxWidthOrHeight: 520,
       useWebWorker: true
     }
     imageCompression(image, options)

@@ -17,8 +17,8 @@ import CardMedia from "@material-ui/core/CardMedia";
 const styles = (theme) => ({
   ...theme.spreadThis,
   root: {
-    width: "600px",
-    height:"600px",    
+    width: "700px",
+    height:"700px",    
   },
 
   box: {
@@ -29,7 +29,13 @@ const styles = (theme) => ({
   media:{
     "max-width": "100%",
     "max-height": "100%",
-  }
+  },
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
  
 });
 class MediaPreview extends Component {
@@ -54,7 +60,7 @@ class MediaPreview extends Component {
 
     return (
       <Fragment>
-        <Dialog   open={this.props.open} onClose={this.handleClose} >
+        <Dialog maxWidth='md' fullWidth open={this.props.open} onClose={this.handleClose} >
       
 
            
@@ -64,10 +70,10 @@ class MediaPreview extends Component {
           </div>
      */}
 
-             <DialogTitle onClose={this.props.handleClose}>
+             <DialogTitle onClose={this.props.handleClose} >
               <Typography variant="h6">Image</Typography>
            
-                <IconButton aria-label="close" onClick={this.props.handleClose}>
+                <IconButton className={classes.closeButton} aria-label="close" onClick={this.props.handleClose}>
                   <CloseIcon />
                 </IconButton>
            
