@@ -25,7 +25,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import ActionMenu from "../Menu/ActionMenu";
-import MediaPreview from "../Info/MediaPreview";
+import MediaView from "./MediaView";
 
 const styles = (theme) => ({
   root: {
@@ -63,23 +63,17 @@ class Info extends Component {
     this.state = {
       expanded: false,
       setExpanded: "",
-      open: false,
+      //open: false,
     };
 
-    this.handleClose = () => this._handleClose();
+    //this.handleClose = () => this._handleClose();
   }
 
-  handleExpandClick = () => {
-    this.setState({ expanded: !this.state.expanded });
-  };
+ 
 
-  handleMediaClick = () => {
-    this.setState({ open: true });
-  };
-
-  _handleClose = (dispatch) => {
+  /* _handleClose = (dispatch) => {
     this.setState({ open: false });
-  };
+  }; */
 
   render() {
     dayjs.extend(relativeTime);
@@ -94,17 +88,18 @@ class Info extends Component {
         createdAt,
         cardImage,
         shortDesc,
+        youtubid,
       },
     } = this.props;
 
     const trimedBody =
       shortDesc.length > 100 ? shortDesc.substring(0, 100) + "..." : body;
-    const imageAvaliable =
+   /*  const imageAvaliable =
       cardImage !== undefined && cardImage.trim() !== "" ? (
         <CardActionArea onClick={this.handleMediaClick}>
           <CardMedia component="img" height="300" image={cardImage} />
         </CardActionArea>
-      ) : null;
+      ) : null; */
 
     const renderHTML = require("react-render-html");
 
@@ -127,13 +122,14 @@ class Info extends Component {
           subheader={dayjs(createdAt).fromNow()}
         />
 
-        {imageAvaliable}
+        
+        <MediaView  cardImage={cardImage} youtubid={youtubid}/>
 
-        <MediaPreview
+       {/*  <MediaPreview
           cardImage={cardImage}
           open={this.state.open}
           handleClose={this.handleClose}
-        />
+        /> */}
 
         <Collapse in={!this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent in={this.state.expanded.toString()}>

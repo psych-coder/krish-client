@@ -43,13 +43,8 @@ class MediaPreview extends Component {
     open: false,
   };
 
-  componentDidMount() {
-    console.log(this.props);
-  }
-
-  handleMediaClick = () => {
-    this.setState({ open: true });
-  };
+  
+  
 
   handleClose = (dispatch) => {
     this.setState({ open: false });
@@ -60,10 +55,7 @@ class MediaPreview extends Component {
 
     return (
       <Fragment>
-        <Dialog maxWidth='md' fullWidth open={this.props.open} onClose={this.handleClose} >
-      
-
-           
+        <Dialog maxWidth='md' fullWidth open={this.props.open} onClose={this.handleClose} >  
 {/* 
             <div className={classes.root} >
               <img src={this.props.cardImage} alt="Cloudy Sky" />
@@ -78,8 +70,7 @@ class MediaPreview extends Component {
                 </IconButton>
            
             </DialogTitle>
-           
-           
+                      
             <CardMedia className={classes.media1}  component="img" image={this.props.cardImage} />
         </Dialog>
       </Fragment>
