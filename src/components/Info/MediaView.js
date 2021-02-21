@@ -16,26 +16,6 @@ import ReactPlayer from 'react-player';
 
 const styles = (theme) => ({
   ...theme.spreadThis,
-  root: {
-    width: "700px",
-    height:"700px",    
-  },
-
-  box: {
-    // height: '100%',
-    "width": "500px",
-    //"border": "5px solid black",
-  },
-  media:{
-    "max-width": "100%",
-    "max-height": "100%",
-  },
-  closeButton: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500],
-  },
  
 });
 class MediaView extends Component {
@@ -46,7 +26,7 @@ class MediaView extends Component {
       open: false,
     };
 
-    this.handleClose = () => this._handleClose();
+  this.handleClose = () => this._handleClose();
   }
   
 

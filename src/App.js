@@ -29,6 +29,8 @@ import RichEditorExample from "./components/RichEditor/RichEditor";
 import Parent from "./components/test/parent";
 import imgcard from "./components/test/imgcard";
 import MediaPreview from "./components/Info/MediaPreview";
+import InfoDialog from "./components/Info/InfoDialog";
+import Info from "./components/Info/Info";
 
 const theme = createMuiTheme(themeFile);
 
@@ -70,6 +72,7 @@ class App extends Component {
                 <Route exact path="/parent" component={Parent} />
                 <Route exact path="/Media" component={MediaPreview} />
                 <Route exact path="/Editor/:infoid" component={MyEditor} />
+                <Route exact path="/i/:infoid" component={Info} />
                 <AuthRoute
                   exact
                   path="/login"

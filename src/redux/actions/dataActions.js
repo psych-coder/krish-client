@@ -170,6 +170,7 @@ export const getInformation = (tagName) => (dispatch) => {
 export const getPost = (id) => (dispatch) => {
   //debugger;
   //let path = `/informations/${id}`
+  dispatch({type:LOADING_UI})
   axios
     .get(`/information/${id}`)
     .then((res) => {
@@ -177,7 +178,7 @@ export const getPost = (id) => (dispatch) => {
         type: SET_POST,
         payload: res.data,
       });
-      // dispatch({type: STOP_LOADING_UI});
+      dispatch({type: STOP_LOADING_UI});
     })
     .catch((err) => console.log(err));
 };

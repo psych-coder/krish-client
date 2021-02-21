@@ -115,6 +115,8 @@ class MyEditor extends React.Component {
 
     let cardImage = (!this.props.data.imagedetails || this.props.data.imagedetails.imageURl ==="") ? (this.state.imageURl) : (this.props.data.imagedetails.imageURl)
 
+    //alert(getInfo.youtube_parser(rawContent));
+
     let information = {
       title: getInfo.getTitle(rawContent),
       body: htmlContent,
@@ -122,6 +124,7 @@ class MyEditor extends React.Component {
       shortDesc: getInfo.getShortDesc(rawContent),
       editorpick: this.state.editorpick,
       imageName: this.props.data.imagedetails.filename,
+      youtubid: getInfo.youtube_parser(rawContent)
     };
     
     if(this.state.mode ==="update"){
@@ -130,6 +133,7 @@ class MyEditor extends React.Component {
     else{
       this.props.postInfo(information);
     }
+    
     //window.history.pushState(null, null, "/");
     this.props.history.push("/");
   };

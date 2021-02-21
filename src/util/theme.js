@@ -138,6 +138,7 @@ export default {
     left: '91%',
     top: '6%'
   },
+  
   },
   profile: {
     paper: {

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
+import axios from "axios";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
@@ -26,6 +27,10 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import ActionMenu from "../Menu/ActionMenu";
 import MediaView from "./MediaView";
+import InfoDialog from "./InfoDialog";
+
+
+import { getPost } from "../../redux/actions/dataActions";
 
 const styles = (theme) => ({
   root: {
@@ -34,11 +39,6 @@ const styles = (theme) => ({
     "margin-bottom": "30px",
     "box-shadow": "none",
     border: "1px solid rgb(202, 202, 202);",
-  },
-
-  media: {
-    width: "300px",
-    //"display": "block"
   },
 
   expand: {
@@ -51,97 +51,142 @@ const styles = (theme) => ({
   expandOpen: {
     transform: "rotate(180deg)",
   },
-  avatar: {
-    //color: theme.palette.getContrastText(deepOrange[500]),
-    backgroundColor: blue[500],
-  },
+
 });
 
 class Info extends Component {
   constructor(props) {
     super();
     this.state = {
+      dialogopen: false,
       expanded: false,
       setExpanded: "",
       //open: false,
+      informationId :"",
+      title:"",
+      body:"",
+      createdAt:"",
+      cardImage:"",
+      shortDesc:"",
+      youtubid: ""
     };
 
+    this.handleDialogClose = () => this._handleDialogClose();
     //this.handleClose = () => this._handleClose();
   }
 
- 
+  componentDidMount() {
+    this.props.getPost(this.props.match.params.infoid);
+  }
+  
+  handleExpandClick = () => {
+    this.setState({ expanded: !this.state.expanded });
+  };
 
+  handleDialogClick = () => {
+    this.setState({ dialogopen: true });
+  };
+
+  _handleDialogClose = (dispatch) => {
+    this.setState({ dialogopen: false });
+  };
   /* _handleClose = (dispatch) => {
     this.setState({ open: false });
   }; */
+
+  componentDidMount() {
+    if(this.props.match) {
+    const infoid = this.props.match.params.infoid;
+    //const screamId = this.props.match.params.screamId;
+
+    if(infoid) this.setState({informationId: infoid});
+    
+    axios
+    .get(`/information/${infoid}`)
+    .then((res) => {
+     this.setState({
+      informationId : res.data.informationId,
+      title: res.data.title,
+      body:res.data.body,
+      createdAt:res.data.createdAt,
+      cardImage:res.data.cardImage,
+      shortDesc:res.data.shortDesc,
+      youtubid: res.data.youtubid
+     })
+    })
+    .catch((err) => console.log(err));
+  }
+  }
 
   render() {
     dayjs.extend(relativeTime);
     const { classes } = this.props;
     const { authenticated } = this.props.user;
-    console.log(authenticated);
-    const {
-      information: {
-        informationId,
-        title,
-        body,
-        createdAt,
-        cardImage,
-        shortDesc,
-        youtubid,
-      },
-    } = this.props;
+    var informationId="",title="",body="",createdAt="",cardImage="",shortDesc="",youtubid = "", open=false;
 
-    const trimedBody =
-      shortDesc.length > 100 ? shortDesc.substring(0, 100) + "..." : body;
-   /*  const imageAvaliable =
-      cardImage !== undefined && cardImage.trim() !== "" ? (
-        <CardActionArea onClick={this.handleMediaClick}>
-          <CardMedia component="img" height="300" image={cardImage} />
-        </CardActionArea>
-      ) : null; */
+    if(this.props.information){
+   		informationId = this.props.information.informationId;
+			title = this.props.information.title;
+			body = this.props.information.body;
+			createdAt = this.props.information.createdAt;
+			cardImage = this.props.information.cardImage;
+			shortDesc =this.props.information.shortDesc;
+			youtubid =this.props.information.youtubid;
+      open=true;
+	  }else{
+      informationId = this.state.informationId;
+			title = this.state.title;
+			body = this.state.body;
+			createdAt = this.state.createdAt;
+			cardImage = this.state.cardImage;
+			shortDesc =this.state.shortDesc;
+			youtubid =this.state.youtubid;
+      open=false;
+    }
+    
+    //const trimedBody =
+    //shortDesc.length > 100 ? shortDesc.substring(0, 100) + "..." : body;
+    /*  const imageAvaliable =
+       cardImage !== undefined && cardImage.trim() !== "" ? (
+         <CardActionArea onClick={this.handleMediaClick}>
+           <CardMedia component="img" height="300" image={cardImage} />
+         </CardActionArea>
+       ) : null; */
 
     const renderHTML = require("react-render-html");
+    const bodyMarkup = renderHTML(body);
+
+    const dialog = {
+      authenticated: authenticated,
+      title:title,
+      createdAt: dayjs(createdAt).fromNow(),
+      bodyMarkup: bodyMarkup,
+      youtubid: youtubid,
+      cardImage:cardImage,
+      informationId:informationId      
+    }
+
 
     return (
       <Card className={classes.root} variant="outlined">
-        <CardHeader
-          avatar={
-            <Avatar aria-label="recipe" className={classes.avatar}>
-              U
-            </Avatar>
-          }
-          action={
-            <ActionMenu
-              showMenu={authenticated}
-              informationId={informationId}
-              information={this.props.information}
-            />
-          }
-          title={title}
-          subheader={dayjs(createdAt).fromNow()}
+      
+       <InfoDialog
+          dialog={dialog}
+          open = {open}
         />
 
-        
-        <MediaView  cardImage={cardImage} youtubid={youtubid}/>
-
-       {/*  <MediaPreview
-          cardImage={cardImage}
-          open={this.state.open}
-          handleClose={this.handleClose}
-        /> */}
-
-        <Collapse in={!this.state.expanded} timeout="auto" unmountOnExit>
+<MediaView cardImage={cardImage} youtubid={youtubid} />
+<Collapse in={!this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent in={this.state.expanded.toString()}>
             <Typography paragraph color="textPrimary" component="p">
-              {renderHTML(trimedBody)}
+              {shortDesc}
             </Typography>
           </CardContent>
         </Collapse>
 
         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography paragraph>{body}</Typography>
+          <CardContent >
+            <Typography paragraph>{bodyMarkup}</Typography>
           </CardContent>
         </Collapse>
 
@@ -152,7 +197,7 @@ class Info extends Component {
           <IconButton aria-label="share">
             <ShareIcon />
           </IconButton>
-          {shortDesc.length > 300 && (
+          {shortDesc.length > 100 && (
             <IconButton
               className={clsx(classes.expand, {
                 [classes.expandOpen]: this.state.expanded,
@@ -160,9 +205,13 @@ class Info extends Component {
               onClick={this.handleExpandClick}
               aria-expanded={this.state.expanded}
               aria-label="show more"
-            ></IconButton>
+            >
+              <ExpandMoreIcon />
+
+            </IconButton>
           )}
         </CardActions>
+
       </Card>
     );
   }
@@ -172,10 +221,15 @@ Info.propTypes = {
   information: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
+  
 };
+
+
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  //data: state.data,
+  //information : state.data.information
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(Info));
