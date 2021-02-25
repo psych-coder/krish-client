@@ -2,22 +2,16 @@ import React, { Component } from "react";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import axios from "axios";
-import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
+
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import CardActionArea from "@material-ui/core/CardActionArea";
 
 import Collapse from "@material-ui/core/Collapse";
-import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import { blue } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
-import { Link } from "react-router-dom";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -25,12 +19,11 @@ import withStyles from "@material-ui/core/styles/withStyles";
 
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import ActionMenu from "../Menu/ActionMenu";
 import MediaView from "./MediaView";
 import InfoDialog from "./InfoDialog";
+import { FacebookShareButton  } from "react-share";
+import FacebookIcon from '@material-ui/icons/Facebook';
 
-
-import { getPost } from "../../redux/actions/dataActions";
 
 const styles = (theme) => ({
   root: {
@@ -62,12 +55,12 @@ class Info extends Component {
       expanded: false,
       setExpanded: "",
       //open: false,
-      informationId :"",
-      title:"",
-      body:"",
-      createdAt:"",
-      cardImage:"",
-      shortDesc:"",
+      informationId: "",
+      title: "",
+      body: "",
+      createdAt: "",
+      cardImage: "",
+      shortDesc: "",
       youtubid: ""
     };
 
@@ -78,7 +71,7 @@ class Info extends Component {
   componentDidMount() {
     this.props.getPost(this.props.match.params.infoid);
   }
-  
+
   handleExpandClick = () => {
     this.setState({ expanded: !this.state.expanded });
   };
@@ -95,55 +88,55 @@ class Info extends Component {
   }; */
 
   componentDidMount() {
-    if(this.props.match) {
-    const infoid = this.props.match.params.infoid;
-    //const screamId = this.props.match.params.screamId;
+    if (this.props.match) {
+      const infoid = this.props.match.params.infoid;
+      //const screamId = this.props.match.params.screamId;
 
-    if(infoid) this.setState({informationId: infoid});
-    
-    axios
-    .get(`/information/${infoid}`)
-    .then((res) => {
-     this.setState({
-      informationId : res.data.informationId,
-      title: res.data.title,
-      body:res.data.body,
-      createdAt:res.data.createdAt,
-      cardImage:res.data.cardImage,
-      shortDesc:res.data.shortDesc,
-      youtubid: res.data.youtubid
-     })
-    })
-    .catch((err) => console.log(err));
-  }
+      if (infoid) this.setState({ informationId: infoid });
+
+      axios
+        .get(`/information/${infoid}`)
+        .then((res) => {
+          this.setState({
+            informationId: res.data.informationId,
+            title: res.data.title,
+            body: res.data.body,
+            createdAt: res.data.createdAt,
+            cardImage: res.data.cardImage,
+            shortDesc: res.data.shortDesc,
+            youtubid: res.data.youtubid
+          })
+        })
+        .catch((err) => console.log(err));
+    }
   }
 
   render() {
     dayjs.extend(relativeTime);
     const { classes } = this.props;
     const { authenticated } = this.props.user;
-    var informationId="",title="",body="",createdAt="",cardImage="",shortDesc="",youtubid = "", open=false;
+    var informationId = "", title = "", body = "", createdAt = "", cardImage = "", shortDesc = "", youtubid = "", open = false;
 
-    if(this.props.information){
-   		informationId = this.props.information.informationId;
-			title = this.props.information.title;
-			body = this.props.information.body;
-			createdAt = this.props.information.createdAt;
-			cardImage = this.props.information.cardImage;
-			shortDesc =this.props.information.shortDesc;
-			youtubid =this.props.information.youtubid;
-      open=true;
-	  }else{
+    if (this.props.information) {
+      informationId = this.props.information.informationId;
+      title = this.props.information.title;
+      body = this.props.information.body;
+      createdAt = this.props.information.createdAt;
+      cardImage = this.props.information.cardImage;
+      shortDesc = this.props.information.shortDesc;
+      youtubid = this.props.information.youtubid;
+      open = true;
+    } else {
       informationId = this.state.informationId;
-			title = this.state.title;
-			body = this.state.body;
-			createdAt = this.state.createdAt;
-			cardImage = this.state.cardImage;
-			shortDesc =this.state.shortDesc;
-			youtubid =this.state.youtubid;
-      open=false;
+      title = this.state.title;
+      body = this.state.body;
+      createdAt = this.state.createdAt;
+      cardImage = this.state.cardImage;
+      shortDesc = this.state.shortDesc;
+      youtubid = this.state.youtubid;
+      open = false;
     }
-    
+
     //const trimedBody =
     //shortDesc.length > 100 ? shortDesc.substring(0, 100) + "..." : body;
     /*  const imageAvaliable =
@@ -158,25 +151,25 @@ class Info extends Component {
 
     const dialog = {
       authenticated: authenticated,
-      title:title,
+      title: title,
       createdAt: dayjs(createdAt).fromNow(),
       bodyMarkup: bodyMarkup,
       youtubid: youtubid,
-      cardImage:cardImage,
-      informationId:informationId      
+      cardImage: cardImage,
+      informationId: informationId
     }
 
 
     return (
       <Card className={classes.root} variant="outlined">
-      
-       <InfoDialog
+
+        <InfoDialog
           dialog={dialog}
-          open = {open}
+          open={open}
         />
 
-<MediaView cardImage={cardImage} youtubid={youtubid} />
-<Collapse in={!this.state.expanded} timeout="auto" unmountOnExit>
+        <MediaView cardImage={cardImage} youtubid={youtubid} />
+        <Collapse in={!this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent in={this.state.expanded.toString()}>
             <Typography paragraph color="textPrimary" component="p">
               {shortDesc}
@@ -195,7 +188,16 @@ class Info extends Component {
             <FavoriteIcon />
           </IconButton>
           <IconButton aria-label="share">
-            <ShareIcon />
+            {/* <ShareIcon />  */}
+          
+            <FacebookShareButton 
+                url= "http://google.co"  
+                quote={"CampersTribe - World is yours to explore"}
+                hashtag="#camperstribe"
+               >
+                   <FacebookIcon  />
+              </FacebookShareButton>
+              
           </IconButton>
           {shortDesc.length > 100 && (
             <IconButton
@@ -221,7 +223,7 @@ Info.propTypes = {
   information: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  
+
 };
 
 

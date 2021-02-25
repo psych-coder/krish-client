@@ -24,9 +24,11 @@
     "react-render-html": "^0.6.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.0",
+    "react-share": "^4.3.1",
     "redux": "^4.0.5",
     "redux-thunk": "github:reduxjs/redux-thunk#master",
-    "rss-parser": "^3.7.5"
+    "rss-parser": "^3.7.5",
+    "save": "^2.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

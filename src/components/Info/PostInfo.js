@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 //redux
 import { connect } from "react-redux";
 import MyButton from "../../util/MyButton";
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 /* 
@@ -111,33 +111,25 @@ class PostInfo extends Component {
     window.history.pushState(null, null, "/kurangu");
   }; */
   render() {
-    const { errors } = this.state;
 
-    const {
-      classes,
-     
-    } = this.props;
-
-   
-
-    let link =  this.props.infoId ? `/Editor/${this.props.infoId}` : "/Editor";
+    let link = this.props.infoId ? `/Editor/${this.props.infoId}` : "/Editor";
     let createEdit = this.props.infoId ? (
       <EditOutlinedIcon color="primary" />
-     
+
     ) : (
-      <AddIcon />
-    );
+        <AddIcon />
+      );
 
     return (
       <Fragment>
-      <Link to={link}>
-        <MyButton tip="Post a news">
-          {createEdit}
-        </MyButton>
+        <Link to={link}>
+          <MyButton tip="Post a news">
+            {createEdit}
+          </MyButton>
         </Link>
 
-        
-       {/*  <Dialog
+
+        {/*  <Dialog
           open={this.state.open || imageloading}
           onClose={this.handleClose}
           fullWidth

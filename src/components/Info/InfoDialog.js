@@ -4,15 +4,13 @@ import PropTypes from "prop-types";
 //Mui Imports
 import withStyles from "@material-ui/core/styles/withStyles";
 import MediaView from "./MediaView";
- 
+
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
-import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
 import ActionMenu from "../Menu/ActionMenu";
 import Avatar from "@material-ui/core/Avatar";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -58,9 +56,9 @@ class InfoDialog extends Component {
     newPath: ''
   };
 
-  
+
   handleOpen = () => {
-    
+
     let oldPath = window.location.pathname;
 
     //const { informationId } = this.props.dialog.informationId;
@@ -69,8 +67,8 @@ class InfoDialog extends Component {
     if (oldPath === newPath) oldPath = `/`;
     window.history.pushState(null, null, newPath);
 
-    if (this.props.open){
-    this.setState({ dialogOpen: true, oldPath, newPath });
+    if (this.props.open) {
+      this.setState({ dialogOpen: true, oldPath, newPath });
     }
     //this.props.getPost(informationId);
   };
@@ -98,7 +96,6 @@ class InfoDialog extends Component {
     } = this.props;
 
 
-    const renderHTML = require("react-render-html");
     const dialogMarkup = loading ? (<div className={classes.spinnerDiv}>
       <CircularProgress size={50} thickness={2} />
     </div>) : (<Dialog maxWidth='md' fullWidth open={this.state.dialogOpen} onClose={this.handleClose} >
@@ -140,7 +137,7 @@ class InfoDialog extends Component {
           onClick={this.handleOpen}
         />
 
-            {dialogMarkup}
+        {dialogMarkup}
       </Fragment>
     );
   }

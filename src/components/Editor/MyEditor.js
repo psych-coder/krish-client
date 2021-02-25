@@ -199,7 +199,7 @@ class MyEditor extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { editorState, name, mode = "create" } = this.state;
+    const { editorState} = this.state;
     //const { filename } = this.props.data;
     //const { imageURl } = this.props.data.imagedetails;
     //console.log(this.props.data.mode);

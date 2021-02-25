@@ -9,11 +9,6 @@ import PropTypes from "prop-types";
 
 //Mui
 import { withStyles } from "@material-ui/core";
-
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogActions from '@material-ui/core/DialogActions';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 
 import {deletePost} from '../../redux/actions/dataActions'

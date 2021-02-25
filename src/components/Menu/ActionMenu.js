@@ -4,12 +4,10 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import MyButton from "../../util/MyButton";
-import DeleteOutline from "@material-ui/icons/DeleteOutline";
+
 import { withStyles } from "@material-ui/core";
 
 import DeleteInfo from "../Info/DeleteInfo"
-import EditInfo from "../Info/EditInfo";
 import PostInfo from '../Info/PostInfo'
 
 const ITEM_HEIGHT = 48;
@@ -63,15 +61,15 @@ class ActionMenu extends Component {
           keepMounted
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
-         
+
         >
-        <MenuItem>
-       {/*  <EditInfo infoId={id} /> */}
-        <PostInfo infoId={id} information={this.props.information} />
-        </MenuItem>
-        <MenuItem>
-        <DeleteInfo infoId={id} />
-        </MenuItem> 
+          <MenuItem>
+            {/*  <EditInfo infoId={id} /> */}
+            <PostInfo infoId={id} information={this.props.information} />
+          </MenuItem>
+          <MenuItem>
+            <DeleteInfo infoId={id} />
+          </MenuItem>
           {/*   {options.map((option) => (
             <MenuItem
               key={option}

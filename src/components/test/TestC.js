@@ -1,7 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 import Switch from '@material-ui/core/Switch';
 import InfoDialog from "../Info/InfoDialog";
 import { BrowserRouter as Router, Route } from "react-router-dom";

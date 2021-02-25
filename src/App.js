@@ -20,16 +20,14 @@ import AuthRoute from "./util/AuthRoute";
 //redux
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import {SET_AUTHENTICATED} from './redux/types';
-import {logoutUser,getUserData} from './redux/actions/userAction';
+import { SET_AUTHENTICATED } from './redux/types';
+import { logoutUser, getUserData } from './redux/actions/userAction';
 import axios from "axios";
 import MyEditor from "./components/Editor/MyEditor";
-import TestC from "./components/test/TestC";
 import RichEditorExample from "./components/RichEditor/RichEditor";
 import Parent from "./components/test/parent";
 import imgcard from "./components/test/imgcard";
 import MediaPreview from "./components/Info/MediaPreview";
-import InfoDialog from "./components/Info/InfoDialog";
 import Info from "./components/Info/Info";
 
 const theme = createMuiTheme(themeFile);
@@ -45,7 +43,7 @@ if (token) {
     store.dispatch(logoutUser());
     window.location.href = "/login";
   } else {
-    store.dispatch({type : SET_AUTHENTICATED });
+    store.dispatch({ type: SET_AUTHENTICATED });
     axios.defaults.headers.common['Authorization'] = token;
     store.dispatch(getUserData());
   }
@@ -57,16 +55,16 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <Provider store={store}>
-        
-            <Router>
-              <Navbar />
-              <div className="container">
+
+          <Router>
+            <Navbar />
+            <div className="container">
               <Switch>
-                
-              <Route exact path="/" component={home} />
+
+                <Route exact path="/" component={home} />
                 <Route exact path="/info/:tagname" component={home} />
                 <Route exact path="/Editor" component={MyEditor} />
-                
+
                 <Route exact path="/test" component={RichEditorExample} />
                 <Route exact path="/divtest" component={imgcard} />
                 <Route exact path="/parent" component={Parent} />
@@ -79,7 +77,7 @@ class App extends Component {
                   component={login}
                 />
 
-               {/*  <AuthRoute
+                {/*  <AuthRoute
                   exact
                   path="/gk"
                   component={home}
@@ -89,12 +87,12 @@ class App extends Component {
                   path="/kurangu"
                   component={home}
                 />
-               
+
 
               </Switch>
-              </div>
-            </Router>
-       
+            </div>
+          </Router>
+
         </Provider>
       </MuiThemeProvider>
     );

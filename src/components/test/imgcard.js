@@ -5,9 +5,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import AppIcon from "../../images/logo.png";
 
 import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
-import { CardContent } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 
 const styles = (theme) => ({
