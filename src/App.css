@@ -4,7 +4,7 @@ body{
   "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
   sans-serif;
 /* background-color: rgb(228 228 228 / 41%); */
-  background-color: #fff;
+  background-color: white;
   
 }
 
@@ -15,7 +15,7 @@ img{
 }
 
 .container{
-  margin: 80px 10px 0 40px;
+  margin: 80px 10px 0 0;
   /* max-width: 1200px; */
 }
 .login-container{
@@ -24,16 +24,18 @@ img{
 .nav-container{
   margin: auto;
 }
-.nav-container svg{
+.nav-container{
   color: #ffffff;
 }
 a{
   text-decoration: none;
 }
 #tags li:hover { 
-  background-color: #F4F4F3;
-  border: 1px solid rgb(202, 202, 202);
+   background-color: #F4F4F3; 
+  /* border: 1px solid rgb(202, 202, 202); */
+  color : #4181db
 }
+
 #mybutton:hover{
   background-color: #f7f7d9;
 }

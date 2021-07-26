@@ -7,18 +7,28 @@ import { getTags } from "../../redux/actions/dataActions";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { indigo } from "@material-ui/core/colors";
 
+
+
 const styles = (theme) => ({
   ulClass: {
     color: indigo[500],
     "list-style-type": "none",
-    "margin-left": "20px",
+    "padding-left": "0px",
   },
   liClass: {
-    padding: "3px",
+    padding: "10px",
+    color: "#4b4b4b",
+    "font-weight": "500",
   },
-  background: {
-    "background-color": "#e9ebee",
+  active: {
+    padding: "10px",
+    //"background-color": "darkblue"
+    "font-weight": "bold",
+   //"background-color" : "#eaf3ff",
+   "font-size": "22px",
+   color: "#4181db" ,
   },
+  
 });
 
 class Tags extends Component {
@@ -38,7 +48,9 @@ class Tags extends Component {
   render() {
     const { classes } = this.props;
     const { tags, loading } = this.props.data;
-    //console.log(tags);
+
+    console.log("--------------Gokul-------");
+    console.log(window.location.pathname);
 
     //const bgClass = selected={this.state.selectedTag===t.tag}
 
@@ -46,8 +58,8 @@ class Tags extends Component {
      <a href={`/info/${t.tag}`} >
         <li
           key={index}
-          className={classes.liClass}
-        
+          
+          className={window.location.pathname===`/info/${t.tag}` ? ( classes.active ) : classes.liClass }
         >
        
         {t.tag}
@@ -56,18 +68,16 @@ class Tags extends Component {
     
     ));
     return (
-      <ul component="nav" className={classes.ulClass} id="tags">
-        <a href="/" >
-          {" "}
-          <li
-            className={classes.liClass}
-          
-          >
-            All
-          </li>
-          </a>
-        {tagItems}
-      </ul>
+      <ul component="nav"  className={classes.ulClass} id="tags">
+      <a href="/" >
+        {" "}
+        <li className={ window.location.pathname==="/" ?(classes.active ):(classes.liClass)} >
+          All
+        </li>
+        </a>
+      {tagItems}
+    </ul>
+     
     );
   }
 }

@@ -11,13 +11,34 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 
 import HomeIcon from '@material-ui/icons/Home';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import YouTubeIcon from '@material-ui/icons/YouTube';
+
+import withStyles from "@material-ui/core/styles/withStyles";
+
+
+const styles = (theme) => ({
+    navbar: {
+        "background-color": "white",
+    },
+    facebook:{
+       
+        "background-color": "#1298f6"
+    },
+
+    youtube:{
+        "background-color": "#ff0000",
+     
+    }
+  });
 
 class Navbar extends Component {
     
     render() {
+        const { classes } = this.props;
         const { authenticated } = this.props;
         return (
-            <AppBar>
+            <AppBar className={classes.navbar} >
                <Toolbar className='nav-container'> 
                     {authenticated ? (
                     <Fragment>
@@ -33,7 +54,24 @@ class Navbar extends Component {
                     </Fragment>
                     ) : (
                     <Fragment>
-                        <Button color='inherit' component={Link} to='/gk'>GK</Button>
+                      
+                        <Link to="/">
+                            <MyButton tip="Home" >
+                                <HomeIcon color="primary" />
+                            </MyButton>
+                        </Link>
+
+                        <Link to="/">
+                            <MyButton tip="Home" >
+                                <FacebookIcon color="primary" />
+                            </MyButton>
+                        </Link>
+
+                        <Link to="/">
+                            <MyButton tip="Home" >
+                                <YouTubeIcon color="secondary" />
+                            </MyButton>
+                        </Link>
                     </Fragment>        
                 )}
                 </Toolbar>
@@ -49,4 +87,4 @@ const mapStateToProps = state => ({
     authenticated: PropTypes.bool.isRequired,
   };
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps)(withStyles(styles)(Navbar));

@@ -13,7 +13,8 @@ export default {
       light: "#6573c3",
       main: "#2c387e",
       dark: "#3f51b5",
-      contrastText: "#fff"
+      contrastText: "#fff",
+    
     },
     secondary: {
      /* light: "#637bfe",
@@ -23,8 +24,7 @@ export default {
       light: "#ff4569",
       main: "#b2102f",
       dark: "#ff1744",
-      contrastText: "#fff"
-
+      contrastText: "#fff",
     }
   },
   spreadThis: {

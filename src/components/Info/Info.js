@@ -21,17 +21,18 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import MediaView from "./MediaView";
 import InfoDialog from "./InfoDialog";
-import { FacebookShareButton  } from "react-share";
-import FacebookIcon from '@material-ui/icons/Facebook';
+import { FacebookShareButton, FacebookIcon  } from "react-share";
 
-
+const I_URL = "https://manithakurangu-338c3.web.app/i/"
 const styles = (theme) => ({
   root: {
-    //maxWidth: 700,
+    maxWidth: "90%",
     margin: "auto",
     "margin-bottom": "30px",
-    "box-shadow": "none",
-    border: "1px solid rgb(202, 202, 202);",
+    //"box-shadow": "none",
+    border: "1px solid rgb(211 211 211)",
+    "border-radius" : "10px"
+    
   },
 
   expand: {
@@ -156,7 +157,7 @@ class Info extends Component {
       bodyMarkup: bodyMarkup,
       youtubid: youtubid,
       cardImage: cardImage,
-      informationId: informationId
+      informationId: informationId,
     }
 
 
@@ -184,20 +185,20 @@ class Info extends Component {
         </Collapse>
 
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
+        {/*   <IconButton aria-label="add to favorites">
             <FavoriteIcon />
-          </IconButton>
+          </IconButton> */}
           <IconButton aria-label="share">
             {/* <ShareIcon />  */}
-          
+            
             <FacebookShareButton 
-                url= "http://google.co"  
-                quote={"CampersTribe - World is yours to explore"}
-                hashtag="#camperstribe"
+                url= {`${ I_URL } + ${informationId} `} 
+                //quote={"CampersTribe - World is yours to explore"}
+                hashtag="#uyrimei"
                >
-                   <FacebookIcon  />
+                  <FacebookIcon size={32} round={true}  />
               </FacebookShareButton>
-              
+             
           </IconButton>
           {shortDesc.length > 100 && (
             <IconButton

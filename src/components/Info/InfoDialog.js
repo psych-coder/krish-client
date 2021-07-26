@@ -21,21 +21,6 @@ import { getPost, clearErrors } from "../../redux/actions/dataActions";
 
 const styles = (theme) => ({
   ...theme.spreadThis,
-  root: {
-    width: "700px",
-    height: "700px",
-  },
-
-  box: {
-    // height: '100%',
-    "width": "500px",
-    //"border": "5px solid black",
-  },
-  media: {
-    width: "300px",
-    //"display": "block"
-  },
-
   closeButton: {
     position: 'absolute',
     right: theme.spacing(1),
@@ -46,6 +31,11 @@ const styles = (theme) => ({
     textAlign: "center",
     marginTop: 50,
     marginBottom: 50
+  },
+  title:{
+    cursor:"pointer",
+    color:"black",
+    "font-weight": "bold",
   }
 
 });
@@ -100,8 +90,8 @@ class InfoDialog extends Component {
       <CircularProgress size={50} thickness={2} />
     </div>) : (<Dialog maxWidth='md' fullWidth open={this.state.dialogOpen} onClose={this.handleClose} >
 
-      <DialogTitle onClose={this.handleClose} >
-        <Typography variant="h6">{this.props.dialog.title}</Typography>
+      <DialogTitle onClose={this.handleClose}  >
+        <Typography  className={classes.title} >{this.props.dialog.title}</Typography>
 
         <IconButton className={classes.closeButton} aria-label="close" onClick={this.handleClose}>
           <CloseIcon />
@@ -132,9 +122,11 @@ class InfoDialog extends Component {
             //information={this.props.information}
             />
           }
+          
           title={this.props.dialog.title}
           subheader={this.props.dialog.createdAt}
           onClick={this.handleOpen}
+         
         />
 
         {dialogMarkup}

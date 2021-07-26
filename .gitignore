@@ -21,3 +21,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+package-lock.json
+.firebase/hosting.YnVpbGQ.cache
+.firebase/hosting.YnVpbGQ.cache
+.gitignore
+build    /precache-manifest.afe03614062e6ec177aa4b9bd20f0abc.js

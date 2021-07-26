@@ -9,11 +9,24 @@ import { connect } from "react-redux";
 import { getInformation } from "../redux/actions/dataActions";
 import Profile from "../components/profile/Profile";
 import withStyles from "@material-ui/core/styles/withStyles";
+import AdSense from "../components/AdSense/AdSense";
+//import Weather from "../components/Weather/weather";
 
 const styles = (theme) => ({
   root: {
     flexGrow: 21,
   },
+  //Main Side Bar
+  msb:{
+    width: "200px",
+    overflow: "auto",
+    
+  },
+  //content
+  mainC:{
+    "margin-right":" 5%",
+  },
+
 });
 
 class home extends Component {
@@ -43,21 +56,23 @@ class home extends Component {
     ) : (
       <InfoSkeleton />
     );
-    let profileMarup = location === "/kurangu" ? <Profile /> : null;
+    //let profileMarup = location === "/kurangu" ? <Profile /> : null;
     return (
-      <Grid container className={classes.root}>
-        <Grid item container spacing={1}>
-          <Grid item sm={2}>
+     
+        <Grid item container spacing={1} >
+          <Grid item sm={2} className={classes.msb }>
            <Tags />
           </Grid>
-          <Grid item sm={7}>
+          <Grid item sm={8}>
             {recentScreamsMarkup}
           </Grid>
           <Grid item sm={3}>
-            {profileMarup}
+            {/* {profileMarup} */}
+           {/*  <Weather/> */}
+           <AdSense />
           </Grid>
         </Grid>
-      </Grid>
+      
     );
   }
 }
