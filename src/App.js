@@ -30,6 +30,7 @@ import imgcard from "./components/test/imgcard";
 import MediaPreview from "./components/Info/MediaPreview";
 import Info from "./components/Info/Info";
 import Weather from "./components/Weather/weather";
+import Loading from "./components/Info/Loading";
 
 const theme = createMuiTheme(themeFile);
 
@@ -72,7 +73,8 @@ class App extends Component {
                 <Route exact path="/Media" component={MediaPreview} />
                 <Route exact path="/Editor/:infoid" component={MyEditor} />
                 <Route exact path="/i/:infoid" component={Info} />
-                <Route exact path="/weather" component={Weather} />
+                {/* <Route exact path="/weather" component={Weather} /> */}
+                <Route exact path="/Load" component={Loading} /> 
                 <AuthRoute
                   exact
                   path="/login"

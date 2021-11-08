@@ -7,7 +7,7 @@ import Tags from "../components/tags/tags";
 import InfoSkeleton from "../util/InfoSkeleton";
 import { connect } from "react-redux";
 import { getInformation } from "../redux/actions/dataActions";
-import Profile from "../components/profile/Profile";
+//import Profile from "../components/profile/Profile";
 import withStyles from "@material-ui/core/styles/withStyles";
 import AdSense from "../components/AdSense/AdSense";
 //import Weather from "../components/Weather/weather";
@@ -47,7 +47,7 @@ class home extends Component {
     const { informations, loading } = this.props.data;
     //const { authenticated } = this.props.user;
 
-    let location = this.props.location.pathname;
+    //let location = this.props.location.pathname;
      
      let recentScreamsMarkup = !loading ? (
       informations.map((information) => (
