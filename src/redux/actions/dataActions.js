@@ -145,10 +145,14 @@ export const clearErrors = () => (dispatch) => {
 };
 
 //Get information
-export const getInformation = (tagName) => (dispatch) => {
-  let path = "/informations";
-  if (tagName !== undefined && tagName !== "" && tagName !== "All") {
-    path = `/informations/tags/${tagName}`;
+export const getInformation = (value, isID) => (dispatch) => {
+  let path = "/informations/1";
+  if(isID){
+    //D2CNoVfI5aBzdYpv4kuW
+    path = '/informations/D2CNoVfI5aBzdYpv4kuW';
+  }
+  if (value !== undefined && value !== "" && value !== "All") {
+    path = `/informations/tags/${value}`;
   }
   dispatch({ type: LOADING_DATA });
   axios

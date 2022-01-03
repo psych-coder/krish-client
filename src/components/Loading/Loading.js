@@ -3,24 +3,8 @@ import React, { Component } from "react";
 import withStyles from "@material-ui/core/styles/withStyles";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
 
-import Collapse from "@material-ui/core/Collapse";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import PropTypes from "prop-types";
-
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import MediaView from "./MediaView";
-import InfoDialog from "./InfoDialog";
-import { FacebookShareButton, FacebookIcon  } from "react-share";
 
 
 const styles = (theme) => ({
@@ -63,7 +47,6 @@ class Loading extends Component {
 
     return (
       <div>
-        
         <h1>demo: react-infinite-scroll-component</h1>
         <hr />
         <InfiniteScroll
@@ -73,12 +56,9 @@ class Loading extends Component {
           loader={<h4>Loading...</h4>}
         >
           {this.state.items.map((i, index) => (
-             <Card className={classes.root} variant="outlined">
-
-            
-     
-             <MediaView  />
-             </Card>  
+            <div className={classes.styles} key={index}>
+              div - #{index}
+            </div>
           ))}
         </InfiniteScroll>
       </div>
